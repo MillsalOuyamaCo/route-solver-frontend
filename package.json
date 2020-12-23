@@ -30,10 +30,12 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
+    "serve": "^11.3.2",
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "serve -s build",
     "staging": "webpack --env.ENVIRONMENT=staging --config webpack.config.stg.js",
     "build": "react-scripts build && gulp licenses",
     "test": "react-scripts test",
