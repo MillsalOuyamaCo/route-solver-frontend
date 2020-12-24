@@ -209,7 +209,7 @@ function Registration() {
     }
 
     if (registered === true) {
-        return <Redirect to="/SignIn" />
+        return <Redirect to="/landing-page" />
     }
 
     return (
