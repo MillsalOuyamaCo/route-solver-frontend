@@ -36,9 +36,9 @@ const EmployeeEditModal = (props) => {
         } else {
             setUserInfo(user);
         }
-    }, 
-    //[authState, authService]
-    [user, isAuthenticated]); // Update if authState changes
+    },
+        //[authState, authService]
+        [user, isAuthenticated]); // Update if authState changes
 
     const [showEditEmployee, setShowEditEmployee] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ const EmployeeEditModal = (props) => {
     const [failMessage, setFailMessage] = useState('');
 
     const [uuid, setUuid] = useState(props.employee.id);
-    const [customer_id, setCustomerId] = useState(organizationId);
+    const [customer_id, setCustomerId] = useState(props.employee.customer_id);
     const [first_name, setFirstName] = useState(props.employee.first_name);
     const [last_name, setLastName] = useState(props.employee.last_name);
     const [document, setDocument] = useState(props.employee.document);
@@ -84,8 +84,9 @@ const EmployeeEditModal = (props) => {
         e.preventDefault();
         setIsLoading(true);
         console.log("submetendo funcionário");
+        console.log("customer-id: " + customer_id);
         const token = await getAccessTokenSilently();
-        
+
         routeSolverApis.put(`employee/${uuid}`, {
             id: uuid,
             customer_id,
@@ -105,7 +106,7 @@ const EmployeeEditModal = (props) => {
                 setIsLoading(false);
                 console.log("salvo com sucesso");
                 setShowSuccess(true);
-                
+
             })
             .catch(error => {
                 setIsLoading(false);
@@ -136,6 +137,9 @@ const EmployeeEditModal = (props) => {
             }
             {
                 console.log("NO EMLOYEE EDIT document: " + props.employee.document)
+            }
+            {
+                console.log("NO EMPLOYEE EDIT, organizationId: " + organizationId)
             }
             <Modal
                 isOpen={props.open}
@@ -301,13 +305,7 @@ const EmployeeEditModal = (props) => {
                                     </Col>
                                 </Row>
 
-                                <Button
-                                    color="danger"
-                                    className="btn-round"
-                                    onClick={props.handleEditModal}
-                                >
-                                    Cancelar
-                                </Button>
+
                                 {
                                     isLoading === true ?
                                         <Button
@@ -321,14 +319,23 @@ const EmployeeEditModal = (props) => {
                                             />Salvando...
                                         </Button>
                                         :
-                                        <Button
-                                            type="submit"
-                                            color="info"
-                                            className="btn-round pull-right"
-                                            onClick={editEmployee}
-                                        >
-                                            Salvar
-                                        </Button>
+                                        <>
+                                            <Button
+                                                color="danger"
+                                                className="btn-round"
+                                                onClick={props.handleEditModal}
+                                            >
+                                                Cancelar
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                color="info"
+                                                className="btn-round pull-right"
+                                                onClick={editEmployee}
+                                            >
+                                                Salvar
+                                            </Button>
+                                        </>
                                 }
 
                             </Form>
@@ -361,7 +368,7 @@ const EmployeeEditModal = (props) => {
                 centered
             >
                 <ModalBody>
-                   Funcionário atualizado com sucesso!
+                    Funcionário atualizado com sucesso!
                 </ModalBody>
                 <ModalFooter>
                     <Button
