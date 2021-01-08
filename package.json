@@ -1,0 +1,67 @@
+{
+  "name": "route-solver",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@auth0/auth0-react": "^1.2.0",
+    "@okta/okta-auth-js": "^4.0.0",
+    "@okta/okta-react": "^3.0.4",
+    "axios": "^0.20.0",
+    "bootstrap": "^4.5.2",
+    "chart.js": "^2.9.3",
+    "formik": "^2.1.5",
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8",
+    "history": "^4.10.1",
+    "moment": "2.26.0",
+    "node-sass": "4.14.1",
+    "nouislider": "14.5.0",
+    "perfect-scrollbar": "^1.5.0",
+    "react": "16.13.1",
+    "react-bootstrap-switch": "15.5.3",
+    "react-chartjs-2": "^2.10.0",
+    "react-datetime": "2.16.3",
+    "react-dom": "16.13.1",
+    "react-google-maps": "^9.4.5",
+    "react-loading-overlay": "^1.0.1",
+    "react-maskedinput": "^4.0.1",
+    "react-notification-alert": "0.0.12",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "3.4.1",
+    "reactstrap": "8.4.1",
+    "serve": "^11.3.2",
+    "yup": "^0.29.3"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "staging": "webpack --env.ENVIRONMENT=staging --config webpack.config.stg.js",
+    "build": "react-scripts build && gulp licenses",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css",
+    "minify-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css --source-map true"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {
+    "typescript": "3.9.5"
+  }
+}
