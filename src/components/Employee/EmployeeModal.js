@@ -37,9 +37,9 @@ const EmployeeModal = (props) => {
         } else {
             setUserInfo(user);
         }
-    }, 
-    //[authState, authService]
-    [user, isAuthenticated]); // Update if authState changes
+    },
+        //[authState, authService]
+        [user, isAuthenticated]); // Update if authState changes
 
     const [showNewEmployee, setShowNewEmployee] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,7 @@ const EmployeeModal = (props) => {
     const [registration_id, setRegistratonId] = useState('');
     const [type_employee, setTypeEmployee] = useState(0);
 
-    const validationSchema = yup.object().shape({
+    const schema = yup.object().shape({
         first_name: yup.string()
             .required("Nome é obrigatório")
             .min(2, "Nome deve conter minimo de 2 caracteres")
@@ -93,12 +93,12 @@ const EmployeeModal = (props) => {
         registration_id: registration_id
     };
 
-    const registerNewEmployee = async (e) => {
-        e.preventDefault();
+    const registerNewEmployee = async () => {
+        //e.preventDefault();
         setIsLoading(true);
         console.log("submetendo funcionário");
         const token = await getAccessTokenSilently();
-        
+
         routeSolverApis.post('employee', {
             id: uuid,
             customer_id,
@@ -118,7 +118,7 @@ const EmployeeModal = (props) => {
                 setIsLoading(false);
                 console.log("salvo com sucesso");
                 setShowSuccess(true);
-                
+
             })
             .catch(error => {
                 setIsLoading(false);
@@ -171,9 +171,9 @@ const EmployeeModal = (props) => {
                 <ModalBody>
                     <Formik
                         initialValues={initialValues}
-                        validationSchema={validationSchema}
                         enableReinitialize={true}
                         onSubmit={registerNewEmployee}
+                        validationSchema={schema}
                     >
                         {({
                             isValid,
@@ -265,7 +265,7 @@ const EmployeeModal = (props) => {
                                                 mask="111.111.111-11"
                                                 placeholder="CPF"
                                                 name="document"
-                                                value={values.document_number}
+                                                value={values.document}
                                                 onChange={handleChange}
                                                 onBlur={(e) => { setDocument(e.target.value) }}
                                                 invalid={touched.document && !!errors.document}
@@ -354,13 +354,6 @@ const EmployeeModal = (props) => {
                                     </Col>
                                 </Row>
 
-                                <Button
-                                    color="danger"
-                                    className="btn-round"
-                                    onClick={closeEmployeModal}
-                                >
-                                    Cancelar
-                                </Button>
                                 {
                                     isLoading === true ?
                                         <Button
@@ -374,14 +367,23 @@ const EmployeeModal = (props) => {
                                             />Salvando...
                                         </Button>
                                         :
-                                        <Button
-                                            type="submit"
-                                            color="info"
-                                            className="btn-round pull-right"
-                                            onClick={registerNewEmployee}
-                                        >
-                                            Salvar
-                                        </Button>
+                                        <>
+                                            <Button
+                                                color="danger"
+                                                className="btn-round"
+                                                onClick={closeEmployeModal}
+                                            >
+                                                Cancelar
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                color="info"
+                                                className="btn-round pull-right"
+                                            //onClick={registerNewEmployee}
+                                            >
+                                                Salvar
+                                            </Button>
+                                        </>
                                 }
 
                             </Form>

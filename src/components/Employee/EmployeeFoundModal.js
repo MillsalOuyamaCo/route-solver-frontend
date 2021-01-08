@@ -82,8 +82,7 @@ const EmployeeFoundModal = (props) => {
         registration_id: registration_id
     };
 
-    const editEmployee = async (e) => {
-        e.preventDefault();
+    const editEmployee = async () => {
         setIsLoading(true);
         setLoadingMessage("Atualizando Funcionário");
         console.log("submetendo funcionário");
