@@ -80,8 +80,7 @@ const EmployeeEditModal = (props) => {
         registration_id: registration_id
     };
 
-    const editEmployee = async (e) => {
-        e.preventDefault();
+    const editEmployee = async () => {
         setIsLoading(true);
         console.log("submetendo funcionário");
         console.log("customer-id: " + customer_id);
@@ -331,13 +330,11 @@ const EmployeeEditModal = (props) => {
                                                 type="submit"
                                                 color="info"
                                                 className="btn-round pull-right"
-                                                onClick={editEmployee}
                                             >
                                                 Salvar
                                             </Button>
                                         </>
                                 }
-
                             </Form>
                         )}
                     </Formik>
