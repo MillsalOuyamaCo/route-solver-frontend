@@ -19,11 +19,12 @@ import Dashboard from "views/Dashboard.js";
 import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
 import Typography from "views/Typography.js";
-import TableList from "views/TableList.js";
 import Maps from "views/Maps.js";
-import Upgrade from "views/Upgrade.js";
 import UserPage from "views/UserPage.js";
 import EmployeePage from "views/EmployeePage.js";
+import EmployeeRoutes from "views/EmployeeRoutes.js";
+import VisitPoints from "views/VisitPoints.js";
+import BestRoutes from "views/BestRoutes.js";
 
 var dashRoutes = [
   {
@@ -62,6 +63,27 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
+    path: "/routes",
+    name: "Rotas",
+    icon: "location_world",
+    component: EmployeeRoutes,
+    layout: "/admin",
+  },
+  {
+    path: "/visit-points",
+    name: "Pontos de Visita",
+    icon: "location_map-big",
+    component: VisitPoints,
+    layout: "/admin",
+  },
+  {
+    path: "/best-routes",
+    name: "Melhores Rotas",
+    icon: "location_compass-05",
+    component: BestRoutes,
+    layout: "/admin",
+  },
+  {
     path: "/employees",
     name: "Funcionários",
     icon: "users_single-02",
@@ -69,25 +91,10 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/extended-tables",
-    name: "Table List",
-    icon: "files_paper",
-    component: TableList,
-    layout: "/admin",
-  },
-  {
     path: "/typography",
     name: "Typography",
     icon: "design-2_ruler-pencil",
     component: Typography,
-    layout: "/admin",
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "objects_spaceship",
-    component: Upgrade,
     layout: "/admin",
   },
 ];

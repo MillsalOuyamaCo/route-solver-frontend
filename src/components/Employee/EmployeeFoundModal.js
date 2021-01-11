@@ -110,7 +110,7 @@ const EmployeeFoundModal = (props) => {
             })
             .catch(error => {
                 setIsLoading(false);
-                console.log("Recebndo erro");
+                console.log("Recebendo erro");
                 console.log(error);
 
                 if (error.response) {
@@ -171,15 +171,6 @@ const EmployeeFoundModal = (props) => {
             spinner
             text='Salvando Funcionário...'
         >
-            {
-                console.log("NO EMLOYEE FOUND: " + JSON.stringify(props.employee, null, 2))
-            }
-            {
-                console.log("NO EMLOYEE FOUND document: " + props.employee.document)
-            }
-            {
-                console.log("INTIAL VALUES NO EMLOYEE FOUND document: " +  JSON.stringify(initialValues, null, 2))
-            }
             <Modal
                 isOpen={props.open}
                 centered

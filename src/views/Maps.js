@@ -120,6 +120,9 @@ const MapWrapper = withScriptjs(
 
 class FullScreenMap extends React.Component {
   render() {
+    const key = process.env.REACT_APP_GOOGLE_API_KEY;
+    const mapUrl = `https://maps.googleapis.com/maps/api/js?key=${key}`;
+
     return (
       <>
         <PanelHeader size="sm" />
@@ -135,7 +138,7 @@ class FullScreenMap extends React.Component {
                     style={{ position: "relative", overflow: "hidden" }}
                   >
                     <MapWrapper
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                      googleMapURL={mapUrl}
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `100%` }} />}
                       mapElement={<div style={{ height: `100%` }} />}

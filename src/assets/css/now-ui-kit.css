@@ -4243,6 +4243,60 @@ Created using IcoMoon - icomoon.io
 .panel-header-lg {
   height: 380px; }
 
+.header-with-image{
+  height: 260px;
+  padding-bottom: 45px;
+  position: relative;
+  background-color: #141E30;
+  overflow: hidden; }
+  .header-with-image .image-white {
+    padding-top: 110px;
+    color: #FFFFFF;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 121%;
+    z-index: -1;
+  }
+    .header-with-image .image-white .title{
+      padding-top: 0px;
+      color: #FFFFFF;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  .header-with-image .image-black {
+    padding-top: 110px;
+    color: #141E30;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 121%;
+    z-index: -1;
+  }
+    .header-with-image .image-black .title{
+      padding-top: 0px;
+      color: #141E30;
+      background-color: rgba(253, 253, 253, 0.85);
+    }
+  .header-with-image .image-gray {
+    padding-top: 80px;
+    color: #808080;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 260px;
+    z-index: -1;
+  }
+  .header-with-image .header .title {
+    color: #FFFFFF;
+   }
+  .header-with-image .header .category {
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 auto;
+    font-size: 13px; }
+  .header-with-image .header .category a {
+    color: #FFFFFF; }
+  
 .sidebar,
 .main-panel,
 .sidebar-wrapper {

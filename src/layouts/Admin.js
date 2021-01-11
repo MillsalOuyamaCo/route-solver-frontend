@@ -42,14 +42,12 @@ class Dashboard extends React.Component {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
-      console.log("did mount");
     }
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();
       document.body.classList.toggle("perfect-scrollbar-on");
-      console.log("will unmount");
     }
   }
   componentDidUpdate(e) {
@@ -57,7 +55,6 @@ class Dashboard extends React.Component {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
       this.mainPanel.current.scrollTop = 0;
-      console.log("did update");
     }
   }
   handleColorClick = (color) => {

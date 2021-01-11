@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 
 // core components
-import PanelHeader from "components/PanelHeader/PanelHeader.js";
+import PanelHeaderWithImage from "components/PanelHeader/PanelHeaderWithImage.js";
 import EmployeeModal from "components/Employee/EmployeeModal.js";
 import EmployeeInfo from 'components/Employee/EmployeeInfo.js';
 import EmployeeFoundModal from 'components/Employee/EmployeeFoundModal.js';
@@ -25,6 +25,7 @@ import routeSolverApis from "services/routeSolverApis";
 import LoadingOverlay from 'react-loading-overlay';
 
 function EmployeePage() {
+    let pageHeader = React.createRef();
     const customerIdAttribute = process.env.REACT_APP_AUTH0_CUSTOMER_ID_ATTRIBUTE;
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [userInfo, setUserInfo] = React.useState(user);
@@ -36,14 +37,9 @@ function EmployeePage() {
 
     React.useEffect(() => {
         if (!isAuthenticated) {
-            // When user isn't authenticated, forget any user info
             setUserInfo(null);
         } else {
             callEmployees(user[customerIdAttribute]);
-            //getTempToken();
-            // return () => {
-            //     callEmployees(user[customerIdAttribute]);
-            // }
         }
     }, [employeesQuantityChanged, employeeQuantityFound]); // Update if user changes
 
@@ -59,7 +55,6 @@ function EmployeePage() {
     }
 
     const closeModal = () => {
-        console.log("trying to close from parent");
         setShowNewEmployee(false);
     }
 
@@ -77,22 +72,19 @@ function EmployeePage() {
                 'Authorization': `bearer ${tempToken}`
             }
         })
-        .then(response => {
-            setEmployeeFromSearch(response.data);
-            setShowFoundEmployee(true);
-            setLoadingEmployees(false);
-            console.log("employee found: " + JSON.stringify(response.data, null, 2));
-            console.log("employee found state: " + JSON.stringify(employeeFromSearch));
-            console.log("opening employee found: " + showFoundEmployee);
-        })
-        .catch(error => {
-            setLoadingEmployees(false);
-            if (error.response) {
-                console.log("Erro ao buscar funcionários. " + error.response.data);
-            } else {
-                console.log("Erro ao buscar funcionários: " + error);
-            }
-        })
+            .then(response => {
+                setEmployeeFromSearch(response.data);
+                setShowFoundEmployee(true);
+                setLoadingEmployees(false);
+            })
+            .catch(error => {
+                setLoadingEmployees(false);
+                if (error.response) {
+                    console.log("Erro ao buscar funcionários. " + error.response.data);
+                } else {
+                    console.log("Erro ao buscar funcionários: " + error);
+                }
+            })
     }
 
     const getToken = async () => {
@@ -116,29 +108,25 @@ function EmployeePage() {
 
     const callEmployees = async (customerId) => {
         setLoadingEmployees(true);
-        console.log("audience: " + process.env.REACT_APP_AUTH0_AUDIENCE);
         const tempToken = await getToken();
-        console.log("callEmployees tempToken: " + tempToken);
-        console.log("callEployees customerId: " + customerId);
-        console.log(" employeesChanged: " + employeesQuantityChanged);
         routeSolverApis.get(`customer/${customerId}/employees`, {
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
         })
-        .then(response => {
-            console.log(response);
-            setEmployees(response.data);
-            setLoadingEmployees(false);
-        })
-        .catch(error => {
-            setLoadingEmployees(false);
-            if (error.response) {
-                console.log("Erro ao buscar funcionários. " + error.response.data);
-            } else {
-                console.log("Erro ao buscar funcionários: " + error);
-            }
-        })
+            .then(response => {
+                console.log(response);
+                setEmployees(response.data);
+                setLoadingEmployees(false);
+            })
+            .catch(error => {
+                setLoadingEmployees(false);
+                if (error.response) {
+                    console.log("Erro ao buscar funcionários. " + error.response.data);
+                } else {
+                    console.log("Erro ao buscar funcionários: " + error);
+                }
+            })
     }
 
     return (
@@ -147,9 +135,15 @@ function EmployeePage() {
             spinner
             text='Buscando Funcionários...'
         >
-            <PanelHeader
+            <PanelHeaderWithImage
                 content={
-                    <div className="header text-center">
+                    <div
+                        className="image-white text-center"
+                        style={{
+                            backgroundImage: "url(" + require("assets/img/employee.jpg") + ")",
+                        }}
+                        ref={pageHeader}
+                    >
                         <h2 className="title">Funcionários</h2>
                     </div>
                 }

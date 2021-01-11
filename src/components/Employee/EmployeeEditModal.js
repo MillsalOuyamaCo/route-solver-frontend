@@ -82,8 +82,6 @@ const EmployeeEditModal = (props) => {
 
     const editEmployee = async () => {
         setIsLoading(true);
-        console.log("submetendo funcionário");
-        console.log("customer-id: " + customer_id);
         const token = await getAccessTokenSilently();
 
         routeSolverApis.put(`employee/${uuid}`, {
@@ -109,9 +107,8 @@ const EmployeeEditModal = (props) => {
             })
             .catch(error => {
                 setIsLoading(false);
-                console.log("Recebndo erro");
+                console.log("Recebendo erro");
                 console.log(error);
-
                 if (error.response) {
                     setFailMessage("Erro ao realizar cadastro: " + error.response.data.message);
                 } else {
@@ -131,15 +128,6 @@ const EmployeeEditModal = (props) => {
             spinner
             text='Salvando Funcionário...'
         >
-            {
-                console.log("NO EMLOYEE EDIT: " + JSON.stringify(props.employee, null, 2))
-            }
-            {
-                console.log("NO EMLOYEE EDIT document: " + props.employee.document)
-            }
-            {
-                console.log("NO EMPLOYEE EDIT, organizationId: " + organizationId)
-            }
             <Modal
                 isOpen={props.open}
                 centered

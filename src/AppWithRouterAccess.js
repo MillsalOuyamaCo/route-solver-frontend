@@ -32,7 +32,6 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import RegistrationPage from "views/RegistrationPage.js";
-import SignIn from './components/Okta/SignIn.js';
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history.js';
 import ProtectedRoute from './auth/protected-route.js'; 
 import Callback from './components/Callback/Callback.js';
@@ -75,10 +74,6 @@ const AppWithRouterAccess = () => {
                     <Route
                         path="/registration"
                         render={(props) => <RegistrationPage {...props} />}
-                    />
-                    <Route
-                        path="/signin"
-                        render={() => <SignIn issuer='https://dev-682545.okta.com/oauth2/default' scope="openid profile" />}
                     />
                     <ProtectedRoute 
                         path="/admin"
