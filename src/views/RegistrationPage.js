@@ -138,24 +138,6 @@ function Registration() {
     };
 
     const submitForm = () => {
-        console.log({
-            id: uuid,
-            first_name,
-            last_name,
-            password,
-            document: document_number,
-            phone_number,
-            email,
-            country,
-            admin_district,
-            locality,
-            postal_code,
-            neighborhood: neighborhoodState,
-            address_line,
-            address_number: Number(address_number),
-            address_complement,
-            type_legal_entity
-        });
         setIsLoading(true);
         routeSolverApis.post('customer', {
             id: uuid,
@@ -194,8 +176,6 @@ function Registration() {
         console.log(postalCodeNumbers)
         addressesApi.get(`ws/${postalCodeNumbers}/json/`)
             .then(resp => {
-                console.log(resp);
-
                 setNeighborhood(resp.data.bairro);
                 setLocality(resp.data.localidade);
                 setAdminDistrict(resp.data.uf);

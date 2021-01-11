@@ -96,7 +96,6 @@ const EmployeeModal = (props) => {
     const registerNewEmployee = async () => {
         //e.preventDefault();
         setIsLoading(true);
-        console.log("submetendo funcionário");
         const token = await getAccessTokenSilently();
 
         routeSolverApis.post('employee', {
@@ -122,7 +121,7 @@ const EmployeeModal = (props) => {
             })
             .catch(error => {
                 setIsLoading(false);
-                console.log("Recebndo erro");
+                console.log("Recebendo erro");
                 console.log(error);
 
                 if (error.response) {
@@ -135,10 +134,6 @@ const EmployeeModal = (props) => {
     }
 
     const closeEmployeModal = () => {
-        console.log("trying to close");
-        console.log(userInfo);
-        console.log(organizationId);
-        console.log(jwtToken);
         clearEmployee();
         setShowNewEmployee(props.handleCloseModal);
     }
@@ -156,9 +151,6 @@ const EmployeeModal = (props) => {
 
     return (
         <>
-            {console.log("PROPS:")}
-            {console.log(props)}
-            {console.log(customer_id)}
             <Modal
                 isOpen={props.open}
                 centered

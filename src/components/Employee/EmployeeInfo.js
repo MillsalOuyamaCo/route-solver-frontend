@@ -91,9 +91,6 @@ const EmployeeInfo = (props) => {
 
     return (
         <div>
-            {
-                console.log("NO EMLOYEE INFO: " + JSON.stringify(props.employees, null, 2))
-            }
             <Row>
                 <Col xs={12}>
                     <Card>
