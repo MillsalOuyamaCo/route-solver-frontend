@@ -93,7 +93,7 @@ const EmployeeModal = (props) => {
         registration_id: registration_id
     };
 
-    const registerNewEmployee = async () => {
+    const registerNewEmployeeAsync = async () => {
         //e.preventDefault();
         setIsLoading(true);
         const token = await getAccessTokenSilently();
@@ -113,24 +113,22 @@ const EmployeeModal = (props) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-            .then(() => {
-                setIsLoading(false);
-                console.log("salvo com sucesso");
-                setShowSuccess(true);
+        .then(() => {
+            setIsLoading(false);
+            setShowSuccess(true);
+        })
+        .catch(error => {
+            setIsLoading(false);
+            console.log("Recebendo erro");
+            console.log(error);
 
-            })
-            .catch(error => {
-                setIsLoading(false);
-                console.log("Recebendo erro");
-                console.log(error);
-
-                if (error.response) {
-                    setFailMessage("Erro ao realizar cadastro: " + error.response.data.message);
-                } else {
-                    setFailMessage("Erro ao realizar cadastro: " + error.message);
-                }
-                setShowFail(true);
-            });
+            if (error.response) {
+                setFailMessage("Erro ao realizar cadastro: " + error.response.data.message);
+            } else {
+                setFailMessage("Erro ao realizar cadastro: " + error.message);
+            }
+            setShowFail(true);
+        });
     }
 
     const closeEmployeModal = () => {
@@ -164,7 +162,7 @@ const EmployeeModal = (props) => {
                     <Formik
                         initialValues={initialValues}
                         enableReinitialize={true}
-                        onSubmit={registerNewEmployee}
+                        onSubmit={registerNewEmployeeAsync}
                         validationSchema={schema}
                     >
                         {({
