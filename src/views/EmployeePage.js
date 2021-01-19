@@ -72,19 +72,19 @@ function EmployeePage() {
                 'Authorization': `bearer ${tempToken}`
             }
         })
-            .then(response => {
-                setEmployeeFromSearch(response.data);
-                setShowFoundEmployee(true);
-                setLoadingEmployees(false);
-            })
-            .catch(error => {
-                setLoadingEmployees(false);
-                if (error.response) {
-                    console.log("Erro ao buscar funcionários. " + error.response.data);
-                } else {
-                    console.log("Erro ao buscar funcionários: " + error);
-                }
-            })
+        .then(response => {
+            setEmployeeFromSearch(response.data);
+            setShowFoundEmployee(true);
+            setLoadingEmployees(false);
+        })
+        .catch(error => {
+            setLoadingEmployees(false);
+            if (error.response) {
+                console.log("Erro ao buscar funcionários. " + error.response.data);
+            } else {
+                console.log("Erro ao buscar funcionários: " + error);
+            }
+        })
     }
 
     const getToken = async () => {
@@ -114,19 +114,19 @@ function EmployeePage() {
                 'Authorization': `bearer ${tempToken}`
             }
         })
-            .then(response => {
-                console.log(response);
-                setEmployees(response.data);
-                setLoadingEmployees(false);
-            })
-            .catch(error => {
-                setLoadingEmployees(false);
-                if (error.response) {
-                    console.log("Erro ao buscar funcionários. " + error.response.data);
-                } else {
-                    console.log("Erro ao buscar funcionários: " + error);
-                }
-            })
+        .then(response => {
+            console.log(response);
+            setEmployees(response.data);
+            setLoadingEmployees(false);
+        })
+        .catch(error => {
+            setLoadingEmployees(false);
+            if (error.response) {
+                console.log("Erro ao buscar funcionários. " + error.response.data);
+            } else {
+                console.log("Erro ao buscar funcionários: " + error);
+            }
+        });
     }
 
     return (

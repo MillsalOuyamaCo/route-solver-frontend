@@ -63,10 +63,10 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/routes",
-    name: "Rotas",
-    icon: "location_world",
-    component: EmployeeRoutes,
+    path: "/employees",
+    name: "Funcionários",
+    icon: "users_single-02",
+    component: EmployeePage,
     layout: "/admin",
   },
   {
@@ -77,17 +77,17 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
+    path: "/routes",
+    name: "Rotas",
+    icon: "location_world",
+    component: EmployeeRoutes,
+    layout: "/admin",
+  },
+  {
     path: "/best-routes",
     name: "Melhores Rotas",
     icon: "location_compass-05",
     component: BestRoutes,
-    layout: "/admin",
-  },
-  {
-    path: "/employees",
-    name: "Funcionários",
-    icon: "users_single-02",
-    component: EmployeePage,
     layout: "/admin",
   },
   {
