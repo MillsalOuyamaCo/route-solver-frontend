@@ -22,9 +22,9 @@ import Typography from "views/Typography.js";
 import Maps from "views/Maps.js";
 import UserPage from "views/UserPage.js";
 import EmployeePage from "views/EmployeePage.js";
-import EmployeeRoutes from "views/EmployeeRoutes.js";
-import VisitPoints from "views/VisitPoints.js";
-import BestRoutes from "views/BestRoutes.js";
+import EmployeeRoutes from "views/EmployeeRoutesPage.js";
+import VisitPoints from "views/VisitPointsPage.js";
+import OptmizedRoutes from "views/OptmizedRoutesPage.js";
 
 var dashRoutes = [
   {
@@ -84,10 +84,10 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/best-routes",
-    name: "Melhores Rotas",
+    path: "/optmized-routes",
+    name: "Rotas Otimizadas",
     icon: "location_compass-05",
-    component: BestRoutes,
+    component: OptmizedRoutes,
     layout: "/admin",
   },
   {

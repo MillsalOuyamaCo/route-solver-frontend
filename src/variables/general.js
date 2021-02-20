@@ -111,7 +111,7 @@ const typeEmployee = [
   {value: 2, label: "Viajante"}
 ];
 
-const employeeTableHead = ["Nome", "Matricula", "Telefone", "E-mail", "Editar/Deletar"];
+const employeeTableHead = ["Nome", "Matricula", "Telefone", "E-mail", "Tipo Funcionário", "Editar/Deletar"];
 
 // tasks list for Tasks card in Dashboard view
 // data for <thead> of table in TableList view

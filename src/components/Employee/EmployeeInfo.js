@@ -114,6 +114,7 @@ const EmployeeInfo = (props) => {
                                                 <td>{employee.registration_id}</td>
                                                 <td>{employee.phone_number}</td>
                                                 <td>{employee.email}</td>
+                                                <td>{employee.type_employee}</td>
                                                 <td>
                                                     <Button
                                                         className="btn-round btn-icon btn-icon-mini btn-neutral"

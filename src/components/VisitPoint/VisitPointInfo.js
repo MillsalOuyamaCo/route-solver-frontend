@@ -41,24 +41,24 @@ const VisitPointInfo = (props) => {
                 'Authorization': `bearer ${token}`
             }
         })
-        .then(response => {
-            setShowDeleteConfirmationModal(false);
-            setShowDeleteModalSuccess(true);
-            props.handleVisitPointsChanged();
-            setIsLoadingDeletion(false);
-        })
-        .catch(error => {
-            if (error.response) {
-                console.log("Erro ao excluir ponto de visita. " + error.response.data);
-                setDeleteModalFailureMessage("Erro ao excluir ponto de visita. " + error.response.data);
-            } else {
-                console.log("Erro ao excluir ponto de visita: " + error);
-                setDeleteModalFailureMessage("Erro ao excluir ponto de visita: " + error);
-            }
-            setShowDeleteConfirmationModal(false);
-            setShowDeleteModalFailed(true);
-            setIsLoadingDeletion(false);
-        });
+            .then(response => {
+                setShowDeleteConfirmationModal(false);
+                setShowDeleteModalSuccess(true);
+                props.handleVisitPointsChanged();
+                setIsLoadingDeletion(false);
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log("Erro ao excluir ponto de visita. " + error.response.data);
+                    setDeleteModalFailureMessage("Erro ao excluir ponto de visita. " + error.response.data);
+                } else {
+                    console.log("Erro ao excluir ponto de visita: " + error);
+                    setDeleteModalFailureMessage("Erro ao excluir ponto de visita: " + error);
+                }
+                setShowDeleteConfirmationModal(false);
+                setShowDeleteModalFailed(true);
+                setIsLoadingDeletion(false);
+            });
     }
 
     return (
@@ -74,9 +74,9 @@ const VisitPointInfo = (props) => {
                                             <CardTitle tag="h4">{visitPoint.address_line}</CardTitle>
                                             <CardSubtitle tag="h5" className="text-info">{visitPoint.address_number}</CardSubtitle>
                                         </CardHeader>
-                                        <UncontrolledCollapse toggler={`#point${visitPoint._id}`} >
-                                            <hr />
+                                        <UncontrolledCollapse toggler={`#point${visitPoint._id}`}>
                                             <CardBody>
+                                                <hr />
                                                 <CardText>
                                                     <strong className="font-weight-bold">País: </strong> {visitPoint.country_region}
                                                 </CardText>
@@ -86,6 +86,7 @@ const VisitPointInfo = (props) => {
                                                 <CardText><strong className="font-weight-bold">Bairro: </strong> {visitPoint.neighborhood}</CardText>
                                                 <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latidude}</CardText>
                                                 <CardText><strong className="font-weight-bold">Longitude: </strong> {visitPoint.lat_lon_info.longitude}</CardText>
+                                                <hr />
                                                 <Button
                                                     className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
                                                     color="danger"

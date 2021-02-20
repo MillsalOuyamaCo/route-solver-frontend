@@ -167,7 +167,7 @@ function EmployeePage() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <Card
                             className="pr-1"
                             md="5"
@@ -218,7 +218,7 @@ function EmployeePage() {
 
 
                 {
-                    employees != null &&
+                    employees != null && employees.length > 0 &&
                     <EmployeeInfo
                         employees={employees}
                         handleEmployeesChanged={handleEmployeesChanged}
