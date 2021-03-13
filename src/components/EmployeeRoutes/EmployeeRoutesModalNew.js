@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // reactstrap components
 import {
@@ -26,49 +26,11 @@ import routeSolverApis from "services/routeSolverApis";
 import EmployeeRoutesRegister from 'components/EmployeeRoutes/EmployeeRoutesRegister.js';
 
 const EmployeeRoutesModalNew = (props) => {
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-
-    const customerIdAttribute = process.env.REACT_APP_AUTH0_CUSTOMER_ID_ATTRIBUTE;
-    let customerId = user[customerIdAttribute];
-
-    const [userInfo, setUserInfo] = React.useState(user);
-    const [travellersInfosArrays, setTravellersInfosArrays] = useState([]);
+    const { user, getAccessTokenSilently } = useAuth0();
 
     const [openEmployeeRouteRegister, setOpenEmployeeRouteRegister] = useState(false);
 
     const [travellerToRegisterPoint, setTravellerToRegisterPoint] = useState(null);
-
-    const readTravellersInfo = async (customerId) => {
-        const tempToken = await getAccessTokenSilently();
-        console.log("Getting travellers... ");
-        routeSolverApis.get(`customer/${customerId}/travellers`, {
-            headers: {
-                'Authorization': `bearer ${tempToken}`
-            }
-        })
-            .then(response => {
-                //setTravellersInfo(response.data);
-                setThreeTravellersPerRow(response.data);
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log("Erro ao buscar viajantes. " + error.response.data);
-                } else {
-                    console.log("Erro ao buscar viajantes: " + error);
-                }
-            });
-    }
-
-    const setThreeTravellersPerRow = (travellersInfo) => {
-        const tempArray = [], size = 3;
-
-        while (travellersInfo.length > 0) {
-            tempArray.push(travellersInfo.splice(0, size));
-        }
-
-        setTravellersInfosArrays(tempArray);
-        console.log("tempArray: " + tempArray);
-    }
 
     const closeModal = () => {
         props.handleCloseModal();
@@ -121,11 +83,13 @@ const EmployeeRoutesModalNew = (props) => {
                     }
                 </ModalBody>
             </Modal>
-            
+
             <EmployeeRoutesRegister
                 open={openEmployeeRouteRegister}
                 traveller={travellerToRegisterPoint}
                 handleCloseModal={closeRegisterVisitPoint}
+                visitPoints={props.visitPoints}
+                handleChangedRoutes={props.handleChangedRoutes}
             />
         </>
     );

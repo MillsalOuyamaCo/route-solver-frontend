@@ -64,13 +64,16 @@ function VisitPointsPage() {
         setLoadingVisitPoints(true);
         const tempToken = await getToken();
         routeSolverApis.get("lat-lon", {
-            params: { customer_id: customerId },
+            params: { 
+                customerId: customerId,
+                addressesPerLine: 3
+            },
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
         })
             .then(response => {
-                setThreePointsPerRow(response.data);
+                setVisitPointsFound(response.data);
                 setLoadingVisitPoints(false);
             })
             .catch(error => {
@@ -81,16 +84,6 @@ function VisitPointsPage() {
                     console.log("Erro ao buscar pontos de visita: " + error);
                 }
             });
-    }
-
-    const setThreePointsPerRow = (visitPoints) => {
-        const tempArray = [], size = 3;
-
-        while (visitPoints.length > 0) {
-            tempArray.push(visitPoints.splice(0, size));
-        }
-
-        setVisitPointsFound(tempArray);
     }
 
     const registerNewVisitPoint = () => {
@@ -172,7 +165,7 @@ function VisitPointsPage() {
                                                 </InputGroupAddon>
                                                 <Input
                                                     placeholder="Consulta por Nome do Ponto"
-                                                    type="email"
+                                                    type="text"
                                                     onChange={(e) => { setStringVisitPointToSearch(e.target.value); searchPoint(e) }}
                                                 />
                                             </InputGroup>

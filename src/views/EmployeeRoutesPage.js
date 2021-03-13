@@ -32,13 +32,15 @@ function EmployeeRoutesPage() {
 
     const [travellersRoutesChanged, setTravellersRoutesChanged] = useState(0);
 
-    const [travellersInfosArrays, setTravellersInfosArrays] = useState([]);
     const [travellersWithRoutes, setTravellersWithRoutes] = useState([]);
     const [travellersWithoutRoutes, setTravellersWithoutRoutes] = useState([]);
-    const [travellersInfo, setTravellersInfo] = useState([]);
+    const [visitPoints, setVisitPoints] = useState([]);
+
+    const [loadTravellerWithRoutes, setLoadTravellerWithRoutes] = useState(false);
+    const [loadTravellerWithoutRoutes, setLoadTravellerWithoutRoutes] = useState(false);
+    const [loadVisitPoints, setLoadVisitPoints] = useState(false);
 
     const [loadingTravellersInfo, setLoadingTravellersInfo] = useState(false);
-    const [employeeRoutesQuantityChanged, setEmployeeRoutesQuantityChanged] = useState(0);
 
     const [showEmployeeRoutesModalNew, setShowEmployeeRoutesModalNew] = useState(false);
 
@@ -46,10 +48,10 @@ function EmployeeRoutesPage() {
         if (!isAuthenticated) {
             setUserInfo(null);
         } else {
+            setLoadingTravellersInfo(true);
             readTravellersWithRoutes(customerId);
             readTravellersWithoutRoutes(customerId);
-            //readTravellersInfo(customerId);
-            //setThreeTravellersPerRow(travellersInfo, travellersRoutes);
+            readRoutes(customerId);
         }
     }, [travellersRoutesChanged])
 
@@ -64,19 +66,27 @@ function EmployeeRoutesPage() {
     }
 
     const readTravellersWithRoutes = async (customerId) => {
+        setLoadTravellerWithRoutes(true);
         const tempToken = await getToken();
-        console.log("Getting routes... ");
-        routeSolverApis.get(`customer/${customerId}/travellersWithFilters?perRow=3&withRoutes=true`, {
+        routeSolverApis.get(`customer/${customerId}/travellersWithFilters`, {
+            params:{
+                perRow: 3,
+                withRoutes: true
+            },
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
         })
             .then(response => {
-                setTravellersWithRoutes(response.data);
                 console.log("travellers with routes response: " + JSON.stringify(response.data));
+                setTravellersWithRoutes(response.data);
+                setLoadTravellerWithRoutes(false);
+                loadedEverything();
             })
             .catch(error => {
                 if (error.response) {
+                    setLoadTravellerWithRoutes(false);
+                    loadedEverything();
                     console.log("Erro ao buscar viajantes com rotas. " + error.response.data);
                 } else {
                     console.log("Erro ao buscar viajantes com rotas: " + error);
@@ -85,9 +95,13 @@ function EmployeeRoutesPage() {
     }
 
     const readTravellersWithoutRoutes = async (customerId) => {
+        setLoadTravellerWithoutRoutes(true);
         const tempToken = await getToken();
-        console.log("Getting routes... ");
-        routeSolverApis.get(`customer/${customerId}/travellersWithFilters?perRow=3&withRoutes=false`, {
+        routeSolverApis.get(`customer/${customerId}/travellersWithFilters`, {
+            params: {
+                perRow: 3,
+                withRoutes: false
+            },
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
@@ -95,8 +109,12 @@ function EmployeeRoutesPage() {
             .then(response => {
                 setTravellersWithoutRoutes(response.data);
                 console.log("travellers without routes response: " + JSON.stringify(response.data));
+                setLoadTravellerWithoutRoutes(false);
+                loadedEverything();
             })
             .catch(error => {
+                setLoadTravellerWithoutRoutes(false);
+                loadedEverything();
                 if (error.response) {
                     console.log("Erro ao buscar viajantes sem rotas. " + error.response.data);
                 } else {
@@ -105,58 +123,37 @@ function EmployeeRoutesPage() {
             });
     }
 
-    const readTravellersInfo = async (customerId) => {
-        setLoadingTravellersInfo(true);
+    const readRoutes = async (customerId) => {
+        setLoadVisitPoints(true);
         const tempToken = await getToken();
-        console.log("Getting travellers... ");
-        routeSolverApis.get(`customer/${customerId}/travellers`, {
+        routeSolverApis.get("lat-lon", {
+            params: { customerId: customerId, 
+                addressesPerLine: 3
+            },
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
         })
             .then(response => {
-                //setTravellersInfo(response.data);
-                setThreeTravellersPerRow(response.data);
-                setLoadingTravellersInfo(false);
+                setVisitPoints(response.data);
+                setLoadVisitPoints(false);
+                loadedEverything();
             })
             .catch(error => {
-                setLoadingTravellersInfo(false);
+                setLoadVisitPoints(false);
+                loadedEverything();
                 if (error.response) {
-                    console.log("Erro ao buscar viajantes. " + error.response.data);
+                    console.log("Erro ao buscar pontos de visita. " + error.response.data);
                 } else {
-                    console.log("Erro ao buscar viajantes: " + error);
+                    console.log("Erro ao buscar pontos de visita: " + error);
                 }
             });
     }
 
-    const setThreeTravellersPerRow = (travellersInfo) => {
-        const tempArray = [], size = 3;
-
-        while (travellersInfo.length > 0) {
-            tempArray.push(travellersInfo.splice(0, size));
-        }
-
-        setTravellersInfosArrays(tempArray);
-        console.log("tempArray: " + tempArray);
+    const loadedEverything = () => {
+        let isLoaded = loadTravellerWithRoutes && loadTravellerWithoutRoutes && loadVisitPoints
+        setLoadingTravellersInfo(isLoaded);
     }
-
-    // const setThreeTravellersPerRow = (travellerInfos, travellerRoutes) => {
-    //     console.log("settings up travellers per row...");
-    //     const tempArray = [], size = 3;
-    //     const travellers = travellerInfos.map((travellerInfo) => {
-    //         return Object.assign(travellerInfo,
-    //             travellerRoutes.find(route => travellerInfo.id === route.employee_id));
-    //     });
-
-    //     console.log("Travellers: " + JSON.stringify(travellers));
-
-    //     while (travellers.length > 0) {
-    //         tempArray.push(travellers.splice(0, size));
-    //     }
-
-    //     setTravellersInfosArrays(tempArray);
-    //     console.log("tempArray: " + tempArray);
-    // }
 
     const registerNewTravellerWithVisitPoint = () => {
         setShowEmployeeRoutesModalNew(true);
@@ -174,9 +171,9 @@ function EmployeeRoutesPage() {
 
     }
 
-    const handleEmployeeRouteChanged = () => {
-        const tempNumber = employeeRoutesQuantityChanged + 1;
-        setEmployeeRoutesQuantityChanged(tempNumber);
+    const handleChangedRoutes = () => {
+        const tempNumber = travellersRoutesChanged + 1;
+        setTravellersRoutesChanged(tempNumber);
     }
 
     return (
@@ -185,8 +182,9 @@ function EmployeeRoutesPage() {
             spinner
             text='Buscando viajantes e seus pontos de visita...'
         >
-            {console.log("body - travellers info: " + JSON.stringify(travellersInfo))}
-            {console.log("body - travellers routes: " + JSON.stringify(travellersWithRoutes))}
+            {console.log("body - travellers with routes: " + JSON.stringify(travellersWithRoutes))}
+            {console.log("body - travellers without routes: " + JSON.stringify(travellersWithoutRoutes))}
+            {console.log("body - visit points: " + JSON.stringify(visitPoints))}
             <PanelHeaderWithImage
                 content={
                     <div
@@ -252,9 +250,8 @@ function EmployeeRoutesPage() {
 
                 {
                     <EmployeeRoutesInfo
-                        travellersInfosArrays={travellersInfosArrays}
-                        travellersWithRouteArrays={travellersWithRoutes}
-                        handleEmployeeRouteChanged={handleEmployeeRouteChanged}
+                        travellersWithRoutes={travellersWithRoutes}
+                        handleChangedRoutes={handleChangedRoutes}
                     />
                 }
             </div>
@@ -263,6 +260,8 @@ function EmployeeRoutesPage() {
                 open={showEmployeeRoutesModalNew}
                 travellersWithoutRouteArrays={travellersWithoutRoutes}
                 handleCloseModal={setShowEmployeeRoutesModalNew}
+                visitPoints={visitPoints}
+                handleChangedRoutes={handleChangedRoutes}
             />
 
         </LoadingOverlay>
