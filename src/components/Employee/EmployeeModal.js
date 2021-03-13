@@ -137,6 +137,7 @@ const EmployeeModal = (props) => {
     }
 
     const clearEmployee = () => {
+        setUuid(v4());
         setFirstName('');
         setLastName('');
         setTypeEmployee(0);

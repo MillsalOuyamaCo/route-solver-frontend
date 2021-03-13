@@ -3,7 +3,7 @@ import React from "react";
 // core components
 import PanelHeaderWithImage from "components/PanelHeader/PanelHeaderWithImage.js";
 
-function EmployeeRoutes() {
+function BestRoutesPage() {
     let pageHeader = React.createRef();
 
     return (
@@ -13,11 +13,11 @@ function EmployeeRoutes() {
                     <div
                         className="image-white text-center"
                         style={{
-                            backgroundImage: "url(" + require("assets/img/routes.jpg") + ")",
+                            backgroundImage: "url(" + require("assets/img/best-routes.jpg") + ")",
                         }}
                         ref={pageHeader}
                     >
-                        <h2 className="title">Rotas</h2>
+                        <h2 className="title">Melhores Rotas</h2>
                     </div>
                 }
             />
@@ -28,4 +28,4 @@ function EmployeeRoutes() {
     );
 }
 
-export default EmployeeRoutes;
+export default BestRoutesPage;

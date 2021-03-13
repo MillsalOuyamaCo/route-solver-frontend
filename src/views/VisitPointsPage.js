@@ -11,13 +11,8 @@ import {
     Input,
     Card,
     CardHeader,
-    CardTitle,
     CardBody,
-    CardSubtitle,
-    CardText,
-    CardFooter,
     Form,
-    UncontrolledCollapse
 } from "reactstrap";
 
 // core components
@@ -28,14 +23,13 @@ import routeSolverApis from "services/routeSolverApis";
 import VisitPointInfo from "components/VisitPoint/VisitPointInfo.js";
 import VisitPointModalNew from "components/VisitPoint/VisitPointModalNew.js";
 
-function VisitPoints() {
+function VisitPointsPage() {
     let pageHeader = React.createRef();
     const customerIdAttribute = process.env.REACT_APP_AUTH0_CUSTOMER_ID_ATTRIBUTE;
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [userInfo, setUserInfo] = React.useState(user);
     let customerId = user[customerIdAttribute];
 
-    const [visitPointsQuantityFound, setVisitPointsQuantityFound] = useState(0);
     const [visitPointsQuantityChanged, setVisitPointsQuantityChanged] = useState(0);
 
     const [stringVisitPointToSearch, setStringVisitPointToSearch] = useState('');
@@ -69,17 +63,17 @@ function VisitPoints() {
     const readPoints = async (customerId) => {
         setLoadingVisitPoints(true);
         const tempToken = await getToken();
-        console.log("token: " + tempToken);
         routeSolverApis.get("lat-lon", {
-            params: { customer_id: customerId },
+            params: { 
+                customerId: customerId,
+                addressesPerLine: 3
+            },
             headers: {
                 'Authorization': `bearer ${tempToken}`
             }
         })
             .then(response => {
-                console.log("response: " + JSON.stringify(response));
-                console.log("response.data: " + JSON.stringify(response.data));
-                setThreePointsPerRow(response.data);
+                setVisitPointsFound(response.data);
                 setLoadingVisitPoints(false);
             })
             .catch(error => {
@@ -90,18 +84,6 @@ function VisitPoints() {
                     console.log("Erro ao buscar pontos de visita: " + error);
                 }
             });
-    }
-
-    const setThreePointsPerRow = (visitPoints) => {
-        const tempArray = [], size = 3;
-
-        while (visitPoints.length > 0) {
-            tempArray.push(visitPoints.splice(0, size));
-        }
-
-        setVisitPointsFound(tempArray);
-
-        console.log("tempArray: " + JSON.stringify(tempArray));
     }
 
     const registerNewVisitPoint = () => {
@@ -120,12 +102,10 @@ function VisitPoints() {
             let points = visitPointsPerRow.filter(point => {
                 return point.address_line.toLowerCase().includes(e.target.value.toLowerCase())
             });
-            console.log("points: " + JSON.stringify(points));
 
             return points;
         });
 
-        console.log("filtered points: " + JSON.stringify(filteredPoint));
         setVisitPointFiltered(filteredPoint);
     }
 
@@ -185,7 +165,7 @@ function VisitPoints() {
                                                 </InputGroupAddon>
                                                 <Input
                                                     placeholder="Consulta por Nome do Ponto"
-                                                    type="email"
+                                                    type="text"
                                                     onChange={(e) => { setStringVisitPointToSearch(e.target.value); searchPoint(e) }}
                                                 />
                                             </InputGroup>
@@ -197,10 +177,14 @@ function VisitPoints() {
                     </Col>
                 </Row>
 
-                <VisitPointInfo
-                    visitPointsArrays={stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? visitPointsFound : visitPointFiltered}
-                    handleVisitPointsChanged={handleVisitPointsChanged}
-                />
+                {
+                    visitPointsFound !== null && visitPointsFound.length > 0 &&
+                    <VisitPointInfo
+                        visitPointsArrays={stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? visitPointsFound : visitPointFiltered}
+                        handleVisitPointsChanged={handleVisitPointsChanged}
+                    />
+                }
+
             </div>
 
             <VisitPointModalNew
@@ -214,4 +198,4 @@ function VisitPoints() {
     );
 }
 
-export default VisitPoints;
+export default VisitPointsPage;

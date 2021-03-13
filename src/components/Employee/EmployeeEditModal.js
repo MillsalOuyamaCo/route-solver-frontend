@@ -55,6 +55,7 @@ const EmployeeEditModal = (props) => {
     const [phone_number, setPhoneNumber] = useState(props.employee.phone_number);
     const [registration_id, setRegistratonId] = useState(props.employee.registration_id);
     const [type_employee, setTypeEmployee] = useState(props.employee.type_employee);
+    const [type_employee_id, setTypeEmployeeId] = useState(typeEmployee.find(type => props.employee.type_employee === type.label).value);
 
     const validationSchema = yup.object().shape({
         first_name: yup.string()
@@ -103,7 +104,6 @@ const EmployeeEditModal = (props) => {
                 setIsLoading(false);
                 console.log("salvo com sucesso");
                 setShowSuccess(true);
-
             })
             .catch(error => {
                 setIsLoading(false);
@@ -120,6 +120,14 @@ const EmployeeEditModal = (props) => {
 
     const closeEmployeModal = () => {
         setShowEditEmployee(props.handleEditModal);
+    }
+
+    const getTypeEmployeeNumberValue = (typeEmployeeString) => {
+        let typeEmployeeNumber = typeEmployee.filter(type => typeEmployeeString === type.label).map(type => {return type.value})
+        
+        console.log("typeEmployeeNumber: " + typeEmployeeNumber);
+
+        return typeEmployeeNumber;
     }
 
     return (
@@ -211,7 +219,9 @@ const EmployeeEditModal = (props) => {
                                             <Input
                                                 type="select"
                                                 name="type_employee"
-                                                value={values.type_employee}
+                                                //value={getTypeEmployeeNumberValue(values.type_employee)}
+                                                defaultValue={type_employee_id}
+                                                multiple={false}
                                                 onChange={handleChange}
                                                 onBlur={e => { setTypeEmployee(e.target.value) }}
                                             >

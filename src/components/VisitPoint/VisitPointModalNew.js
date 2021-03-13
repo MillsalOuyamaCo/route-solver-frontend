@@ -89,18 +89,6 @@ const VisitPointModalNew = (props) => {
     };
 
     const registerNewVisitPointAsync = async () => {
-        console.log("submitting form!");
-        console.log(
-            country_region,
-            admin_district,
-            locality,
-            postal_code,
-            neighborhood,
-            address_line,
-            address_number,
-            address_complement,
-            props.customerId
-        );
         setIsLoading(true);
         const token = await getAccessTokenSilently();
         routeSolverApis.post('lat-lon', {
