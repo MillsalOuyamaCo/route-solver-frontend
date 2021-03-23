@@ -139,7 +139,8 @@ const EmployeeRoutesInfo = (props) => {
                                                 <UncontrolledTooltip
                                                     target="tooltip923217207"
                                                 >
-                                                    Alterar Pontos de Visita para Viajante
+                                                    Em Breve
+                                                    {/* Alterar Pontos de Visita para Viajante */}
                                                 </UncontrolledTooltip>
                                             </CardBody>
                                         </UncontrolledCollapse>
