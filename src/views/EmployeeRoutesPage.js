@@ -78,7 +78,6 @@ function EmployeeRoutesPage() {
             }
         })
             .then(response => {
-                console.log("travellers with routes response: " + JSON.stringify(response.data));
                 setTravellersWithRoutes(response.data);
                 setLoadTravellerWithRoutes(false);
                 loadedEverything();
@@ -108,7 +107,6 @@ function EmployeeRoutesPage() {
         })
             .then(response => {
                 setTravellersWithoutRoutes(response.data);
-                console.log("travellers without routes response: " + JSON.stringify(response.data));
                 setLoadTravellerWithoutRoutes(false);
                 loadedEverything();
             })
@@ -159,10 +157,6 @@ function EmployeeRoutesPage() {
         setShowEmployeeRoutesModalNew(true);
     }
 
-    const closeNewTravellerWithVisitPoint = () => {
-        setShowEmployeeRoutesModalNew(false);
-    }
-
     const setStringTravellerEmailToSearch = (email) => {
 
     }
@@ -182,9 +176,6 @@ function EmployeeRoutesPage() {
             spinner
             text='Buscando viajantes e seus pontos de visita...'
         >
-            {console.log("body - travellers with routes: " + JSON.stringify(travellersWithRoutes))}
-            {console.log("body - travellers without routes: " + JSON.stringify(travellersWithoutRoutes))}
-            {console.log("body - visit points: " + JSON.stringify(visitPoints))}
             <PanelHeaderWithImage
                 content={
                     <div

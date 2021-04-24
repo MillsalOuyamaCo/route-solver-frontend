@@ -52,7 +52,7 @@ const EmployeeRoutesRegister = (props) => {
 
     const visitPointsToShow = stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? copyOfRoutes : visitPointFiltered;
 
-    const closeModal = () => {
+    const clearSelectedAddressArray = () => {
         props.visitPoints.forEach((visitPointsRow) =>
             visitPointsRow.forEach((point) => {
                 if (point.is_selected) {
@@ -60,18 +60,28 @@ const EmployeeRoutesRegister = (props) => {
                 }
             })
         );
+        setAddressesToSave([]);
+        setAddressesToSelect([]);
+        setSelectedStartPoint(null);
+    }
+
+    const closeModal = () => {
+        clearSelectedAddressArray();
         props.handleCloseModal();
     }
 
     const closeSuccessModal = () => {
         props.handleChangedRoutes();
+        clearSelectedAddressArray();
         setShowStartPointModal(false);
         setOpenSucessModal(false);
         props.handleCloseModal();
     }
 
     const closeFailureModal = () => {
+        clearSelectedAddressArray();
         setOpenFailureModal(false);
+        setShowStartPointModal(false);
         props.handleCloseModal();
     }
 
@@ -365,7 +375,7 @@ const EmployeeRoutesRegister = (props) => {
                         </Col>
 
                     </Row>
-                    {selectedStartPoint != null && <hr /> }
+                    {selectedStartPoint != null && <hr />}
                     <Row>
                         {selectedStartPoint != null &&
                             <Col md={12}>

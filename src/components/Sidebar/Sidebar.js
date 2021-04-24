@@ -23,6 +23,7 @@ import { Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "logo-white.svg";
+//import logMapsLogo from "../../assets/img/LogMaps-final.png";
 
 var ps;
 
@@ -57,14 +58,15 @@ class Sidebar extends React.Component {
             target="_blank"
           >
             <div className="logo-img">
-              <div className="now-ui-icons design_vector" />
+              {/* <div className="now-ui-icons design_vector" /> */}
+              <img src={logo} alt="react-logo" />
             </div>
           </NavLink>
           <NavLink to="/"
             className="simple-text logo-normal"
             target="_blank"
           >
-            Route-Solver
+            LogMaps
           </NavLink>
         </div>
         <div className="sidebar-wrapper" ref="sidebar">
