@@ -34,15 +34,12 @@ const EmployeeRoutesInfo = (props) => {
     const [deleteModalFailureMessage, setDeleteModalFailureMessage] = useState("");
 
     const TravellerRouteContent = (props) => {
-        console.log("props.travellerRoutes: " + JSON.stringify(props.travellersRoutes));
         const travellersRoutes = props.travellersRoutes;
-        console.log("traveller route: " + JSON.stringify(travellersRoutes));
-        console.log("rendering some route");
         return (
             <>
                 {travellersRoutes.map((route, index) => {
                     return (
-                        <ul>
+                        <ul key={index}>
                             <li>
                                 <CardText>
                                     {route.address_line}, {route.address_number}, {route.neighborhood}
@@ -139,7 +136,8 @@ const EmployeeRoutesInfo = (props) => {
                                                 <UncontrolledTooltip
                                                     target="tooltip923217207"
                                                 >
-                                                    Alterar Pontos de Visita para Viajante
+                                                    Em Breve
+                                                    {/* Alterar Pontos de Visita para Viajante */}
                                                 </UncontrolledTooltip>
                                             </CardBody>
                                         </UncontrolledCollapse>

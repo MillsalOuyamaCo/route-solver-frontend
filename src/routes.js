@@ -24,7 +24,7 @@ import UserPage from "views/UserPage.js";
 import EmployeePage from "views/EmployeePage.js";
 import EmployeeRoutes from "views/EmployeeRoutesPage.js";
 import VisitPoints from "views/VisitPointsPage.js";
-import OptmizedRoutes from "views/OptmizedRoutesPage.js";
+import OptimizedRoutes from "views/OptimizedRoutesPage.js";
 
 var dashRoutes = [
   {
@@ -87,7 +87,7 @@ var dashRoutes = [
     path: "/optmized-routes",
     name: "Rotas Otimizadas",
     icon: "location_compass-05",
-    component: OptmizedRoutes,
+    component: OptimizedRoutes,
     layout: "/admin",
   },
   {

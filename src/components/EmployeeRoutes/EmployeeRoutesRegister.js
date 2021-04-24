@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // reactstrap components
 import {
@@ -23,6 +23,7 @@ import {
     InputGroupAddon,
     InputGroupText
 } from "reactstrap";
+import Select from 'react-select';
 
 import routeSolverApis from "services/routeSolverApis";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -32,35 +33,69 @@ const EmployeeRoutesRegister = (props) => {
     const [isSaving, setIsSaving] = useState(false);
     const [openSucessModal, setOpenSucessModal] = useState(false);
     const [openFailureModal, setOpenFailureModal] = useState(false);
+    const [showStartPointModal, setShowStartPointModal] = useState(false);
     const [failureMessage, setFailureMessage] = useState('');
     const [stringVisitPointToSearch, setStringVisitPointToSearch] = useState('');
     const [visitPointFiltered, setVisitPointFiltered] = useState([]);
+    const [addressesToSave, setAddressesToSave] = useState([]);
+    const [copyOfRoutes, setCopyOfRoutes] = useState(props.visitPoints);
+    const [selectedStartPoint, setSelectedStartPoint] = useState(null);
+    const [addressesToSelect, setAddressesToSelect] = useState([]);
 
+    useEffect(() => {
+        setCopyOfRoutes(props.visitPoints);
+        return function cleanup() {
+            setCopyOfRoutes([]);
+        }
+    }, [props.visitPoints])
     //const visitPoints = props.visitPoints.map(obj => ({...obj, isSelected: false}));
 
-    const visitPointsToShow = stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? props.visitPoints : visitPointFiltered;
+    const visitPointsToShow = stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? copyOfRoutes : visitPointFiltered;
+
+    const clearSelectedAddressArray = () => {
+        props.visitPoints.forEach((visitPointsRow) =>
+            visitPointsRow.forEach((point) => {
+                if (point.is_selected) {
+                    point.is_selected = false;
+                }
+            })
+        );
+        setAddressesToSave([]);
+        setAddressesToSelect([]);
+        setSelectedStartPoint(null);
+    }
 
     const closeModal = () => {
+        clearSelectedAddressArray();
         props.handleCloseModal();
     }
 
     const closeSuccessModal = () => {
         props.handleChangedRoutes();
+        clearSelectedAddressArray();
+        setShowStartPointModal(false);
         setOpenSucessModal(false);
         props.handleCloseModal();
     }
 
     const closeFailureModal = () => {
+        clearSelectedAddressArray();
         setOpenFailureModal(false);
+        setShowStartPointModal(false);
         props.handleCloseModal();
     }
 
+    const closeStartPointModal = () => {
+        setShowStartPointModal(false);
+    }
+
     const closeBtn = <button className="close" onClick={closeModal}>&times;</button>;
-    let addressesToSave = [];
+    const cloneBtnStartPoint = <button className="close" onClick={closeStartPointModal}>&times;</button>;
 
     const handleAddressToTraveller = (isSelected, route) => {
         if (!isSelected) {
             let routeToSave = {
+                _id: route._id,
                 lat_lon: route.lat_lon_info,
                 country_region: route.country_region,
                 admin_district: route.admin_district,
@@ -68,9 +103,16 @@ const EmployeeRoutesRegister = (props) => {
                 postal_code: route.locality,
                 neighborhood: route.neighborhood,
                 address_line: route.address_line,
-                address_number: route.address_number
+                address_number: route.address_number,
+                start_point: false
             };
+
+            let routeToSelect = {
+                value: routeToSave,
+                label: routeToSave.address_line + " " + routeToSave.address_number + ", " + routeToSave.neighborhood
+            }
             addressesToSave.push(routeToSave);
+            addressesToSelect.push(routeToSelect);
             console.log("addressToSave added route = " + JSON.stringify(route));
             console.log("addressToSave added array = " + JSON.stringify(addressesToSave));
         }
@@ -79,9 +121,62 @@ const EmployeeRoutesRegister = (props) => {
                 routeToSave.address_number !== route.address_number &&
                 routeToSave.neighborhood !== route.neighborhood);
 
-            addressesToSave = listWithoutPoint;
+            setAddressesToSave(listWithoutPoint);
             console.log("addressToSave removed = " + JSON.stringify(addressesToSave));
         }
+    }
+
+    const StartPointContent = (props) => {
+        const [isStartPoint, setIsStartPoint] = useState(props.route.start_point);
+
+        return (
+            <>
+                <Card
+                    inverse={isStartPoint}
+                    color={isStartPoint ? "success" : ""}
+                    onClick={() => {
+                        setIsStartPoint(!isStartPoint);
+                        handleSetStartPoint(props.route, isStartPoint);
+                    }}
+                >
+                    <CardHeader id={`point${props.route._id}`}>
+                        <CardTitle tag="h4">{props.route.address_line}</CardTitle>
+                        <CardSubtitle tag="h5" className={isStartPoint ? "" : "text-info"}>{props.route.address_number}</CardSubtitle>
+                    </CardHeader>
+                    <CardBody>
+                        <hr />
+                        <CardText>
+                            <strong className="font-weight-bold">País: </strong> {props.route.country_region}
+                        </CardText>
+                        <CardText><strong className="font-weight-bold">Bairro: </strong> {props.route.neighborhood}</CardText>
+                        <hr />
+                    </CardBody>
+                    <CardFooter>
+                    </CardFooter>
+                </Card>
+            </>
+        );
+    }
+
+    const handleSetStartPoint = (selectedPoint) => {
+        setSelectedStartPoint(selectedPoint);
+
+        const startPoint = addressesToSave.filter(address => address.start_point === true);
+
+        if (startPoint != null) {
+            startPoint.forEach((point) => {
+                point.start_point = false;
+            });
+        }
+
+        addressesToSave.forEach((address) => {
+            if (address._id === selectedPoint.value._id) {
+                address.start_point = true;
+            }
+        });
+
+        console.log("startPoint: " + startPoint);
+        console.log("addresses to save start point changed: " + JSON.stringify(addressesToSave));
     }
 
     const getToken = async () => {
@@ -130,7 +225,7 @@ const EmployeeRoutesRegister = (props) => {
         e.preventDefault();
         //setStringVisitPointToSearch(e.target.value);
 
-        let filteredPoint = props.visitPoints.map(visitPointsPerRow => {
+        let filteredPoint = copyOfRoutes.map(visitPointsPerRow => {
             let points = visitPointsPerRow.filter(point => {
                 return point.address_line.toLowerCase().includes(e.target.value.toLowerCase())
             });
@@ -189,42 +284,42 @@ const EmployeeRoutesRegister = (props) => {
                     </ModalHeader>
                 }
                 <ModalBody>
-                <Row>
-                    <Col md="12">
-                        <Card
-                            className="pr-1"
-                            md="5"
-                        >
-                            <CardHeader>
-                                <h5 className="title">Buscar Ponto de Visita</h5>
-                            </CardHeader>
-                            <CardBody>
-                                <Form action="" className="form" method="" onSubmit={searchPoint}>
-                                    <Row>
-                                        <Col>
-                                            <InputGroup
-                                                className={"no-border input-lg"}
-                                            >
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>
-                                                        <i className="now-ui-icons ui-1_zoom-bold">
-                                                        </i>
-                                                    </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Input
-                                                    placeholder="Consulta por Nome do Ponto"
-                                                    type="text"
-                                                    onChange={(e) => { setStringVisitPointToSearch(e.target.value); searchPoint(e) }}
-                                                />
-                                            </InputGroup>
-                                        </Col>
-                                    </Row>
-                                </Form>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-                    {visitPointsToShow.map((pointsRow, key) => { 
+                    <Row>
+                        <Col md="12">
+                            <Card
+                                className="pr-1"
+                                md="5"
+                            >
+                                <CardHeader>
+                                    <h5 className="title">Buscar Ponto de Visita</h5>
+                                </CardHeader>
+                                <CardBody>
+                                    <Form action="" className="form" method="" onSubmit={searchPoint}>
+                                        <Row>
+                                            <Col>
+                                                <InputGroup
+                                                    className={"no-border input-lg"}
+                                                >
+                                                    <InputGroupAddon addonType="prepend">
+                                                        <InputGroupText>
+                                                            <i className="now-ui-icons ui-1_zoom-bold">
+                                                            </i>
+                                                        </InputGroupText>
+                                                    </InputGroupAddon>
+                                                    <Input
+                                                        placeholder="Consulta por Nome do Ponto"
+                                                        type="text"
+                                                        onChange={(e) => { setStringVisitPointToSearch(e.target.value); searchPoint(e) }}
+                                                    />
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                    {visitPointsToShow.map((pointsRow, key) => {
                         return (
                             <Row key={key}>
                                 { pointsRow.map((point) =>
@@ -242,12 +337,67 @@ const EmployeeRoutesRegister = (props) => {
                         color="info"
                         className="btn-round pull-right"
                         onClick={(e) => {
+                            //saveTravellersWithRoutes(props.traveller);
+                            setShowStartPointModal(true);
+                            e.preventDefault();
+                        }}
+                    >
+                        Selecionar Ponto de Partida
+                    </Button>
+                </ModalBody>
+            </Modal>
+
+            <Modal
+                isOpen={showStartPointModal}
+                centered
+                size="md"
+            >
+                {props.traveller != null &&
+                    <ModalHeader close={cloneBtnStartPoint}>
+                        Selecione o Ponto de Início para o Viajante {props.traveller.first_name} {props.traveller.last_name}
+                    </ModalHeader>
+                }
+                <ModalBody>
+                    <Row>
+                        {/* {addressesToSave.map((route) =>
+                        <Col key={route._id} md="4">
+                            <StartPointContent key={route._id}
+                                route={route}
+                            />
+                        </Col>
+                    )} */}
+                        <Col md={12}>
+                            <Select
+                                value={selectedStartPoint}
+                                onChange={handleSetStartPoint}
+                                options={addressesToSelect}
+                            />
+                        </Col>
+
+                    </Row>
+                    {selectedStartPoint != null && <hr />}
+                    <Row>
+                        {selectedStartPoint != null &&
+                            <Col md={12}>
+
+                                Opção selecionada:
+                            <strong className="font-weight-bold">
+                                    {" " + selectedStartPoint.label}
+                                </strong>
+                            </Col>
+                        }
+                    </Row>
+                    <hr />
+                    <Button
+                        color="info"
+                        className="btn-round pull-right"
+                        onClick={(e) => {
                             saveTravellersWithRoutes(props.traveller);
                             e.preventDefault();
                         }}
                     >
                         Salvar
-                </Button>
+                    </Button>
                 </ModalBody>
             </Modal>
 

@@ -34,7 +34,7 @@ const MapWrapper = withScriptjs(
   withGoogleMap((props) => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
+      defaultCenter={{ lat: -23.550675, lng: -46.634147}}
       defaultOptions={{
         scrollwheel: false,
         styles: [
@@ -113,7 +113,9 @@ const MapWrapper = withScriptjs(
         ],
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      <Marker position={{ lat: -23.5574, lng: -46.65667}} />
+      <Marker position={{ lat: -23.48636, lng: -46.75078}} />
+      <Marker position={{ lat: -23.55807, lng: -46.6153}} />
     </GoogleMap>
   ))
 );
