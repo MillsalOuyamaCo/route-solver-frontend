@@ -210,11 +210,11 @@ const EmployeeRoutesRegister = (props) => {
             })
             .catch(error => {
                 if (error.response) {
-                    console.log("Erro ao excluir ponto de visita. " + error.response.data);
-                    setFailureMessage("Erro ao excluir ponto de visita. " + error.response.data);
+                    console.log("Erro ao salvar ponto de visita. " + error.response.data);
+                    setFailureMessage("Erro ao salvar ponto de visita. " + error.response.data);
                 } else {
-                    console.log("Erro ao excluir ponto de visita: " + error);
-                    setFailureMessage("Erro ao excluir ponto de visita: " + error);
+                    console.log("Erro ao salvar ponto de visita: " + error);
+                    setFailureMessage("Erro ao salvar ponto de visita: " + error);
                 }
                 setOpenFailureModal(true);
                 setIsSaving(false);
