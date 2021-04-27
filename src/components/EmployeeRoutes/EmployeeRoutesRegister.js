@@ -40,7 +40,7 @@ const EmployeeRoutesRegister = (props) => {
     const [addressesToSave, setAddressesToSave] = useState([]);
     const [copyOfRoutes, setCopyOfRoutes] = useState(props.visitPoints);
     const [selectedStartPoint, setSelectedStartPoint] = useState(null);
-    const [addressesToSelect, setAddressesToSelect] = useState([]);
+    const [addressesToSelectStartPoint, setAddressesToSelectStartPoint] = useState([]);
 
     useEffect(() => {
         setCopyOfRoutes(props.visitPoints);
@@ -57,11 +57,12 @@ const EmployeeRoutesRegister = (props) => {
             visitPointsRow.forEach((point) => {
                 if (point.is_selected) {
                     point.is_selected = false;
+                    point.isStartPoint = false;
                 }
             })
         );
         setAddressesToSave([]);
-        setAddressesToSelect([]);
+        setAddressesToSelectStartPoint([]);
         setSelectedStartPoint(null);
     }
 
@@ -112,16 +113,20 @@ const EmployeeRoutesRegister = (props) => {
                 label: routeToSave.address_line + " " + routeToSave.address_number + ", " + routeToSave.neighborhood
             }
             addressesToSave.push(routeToSave);
-            addressesToSelect.push(routeToSelect);
+            addressesToSelectStartPoint.push(routeToSelect);
             console.log("addressToSave added route = " + JSON.stringify(route));
             console.log("addressToSave added array = " + JSON.stringify(addressesToSave));
         }
         else {
-            let listWithoutPoint = addressesToSave.filter(routeToSave => routeToSave.address_line !== route.address_line &&
-                routeToSave.address_number !== route.address_number &&
-                routeToSave.neighborhood !== route.neighborhood);
+            let listWithoutPoint = addressesToSave.filter(routeToSave => routeToSave.postal_code !== route.postal_code &&
+                routeToSave.address_number !== route.address_number);
+
+            let listWithoutStartPoint = addressesToSelectStartPoint.filter(routeToSave => routeToSave.value.postal_code !== route.postal_code &&
+                routeToSave.value.address_number !== route.address_number);
+
 
             setAddressesToSave(listWithoutPoint);
+            setAddressesToSelectStartPoint(listWithoutStartPoint);
             console.log("addressToSave removed = " + JSON.stringify(addressesToSave));
         }
     }
@@ -370,7 +375,7 @@ const EmployeeRoutesRegister = (props) => {
                             <Select
                                 value={selectedStartPoint}
                                 onChange={handleSetStartPoint}
-                                options={addressesToSelect}
+                                options={addressesToSelectStartPoint}
                             />
                         </Col>
 
