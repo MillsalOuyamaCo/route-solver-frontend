@@ -84,7 +84,7 @@ const VisitPointInfo = (props) => {
                                                 <CardText><strong className="font-weight-bold">Cidade: </strong> {visitPoint.locality}</CardText>
                                                 <CardText><strong className="font-weight-bold">CEP: </strong> {visitPoint.postal_code}</CardText>
                                                 <CardText><strong className="font-weight-bold">Bairro: </strong> {visitPoint.neighborhood}</CardText>
-                                                <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latidude}</CardText>
+                                                <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latitude}</CardText>
                                                 <CardText><strong className="font-weight-bold">Longitude: </strong> {visitPoint.lat_lon_info.longitude}</CardText>
                                                 <hr />
                                                 <Button

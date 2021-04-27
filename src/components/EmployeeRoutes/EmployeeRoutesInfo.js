@@ -17,7 +17,9 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
-    Spinner
+    Spinner,
+    ListGroup,
+    ListGroupItem,
 } from "reactstrap";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -36,24 +38,22 @@ const EmployeeRoutesInfo = (props) => {
     const TravellerRouteContent = (props) => {
         const travellersRoutes = props.travellersRoutes;
         return (
-            <>
+            <ListGroup>
                 {travellersRoutes.map((route, index) => {
                     return (
-                        <ul key={index}>
-                            <li>
-                                <CardText>
-                                    {route.address_line}, {route.address_number}, {route.neighborhood}
-                                </CardText>
-                            </li>
-                        </ul>
+                        <ListGroupItem key={index}>
+                            <CardText>
+                                {index + 1} - {route.address_line}, {route.address_number}, {route.neighborhood}
+                            </CardText>
+                        </ListGroupItem>
                     );
                 })}
-            </>
+            </ListGroup>
         );
     }
 
     const handleCloseConfirmationDeleteModal = () => {
-        setShowDeleteModalSuccess(false);  
+        setShowDeleteModalSuccess(false);
         props.handleChangedRoutes();
     }
 
@@ -166,7 +166,7 @@ const EmployeeRoutesInfo = (props) => {
                         <Button
                             className="btn-round"
                             color="danger"
-                            onClick={() => { setShowDeleteConfirmationModal(false);}}
+                            onClick={() => { setShowDeleteConfirmationModal(false); }}
                         >
                             Não
                         </Button>
@@ -233,7 +233,7 @@ const EmployeeRoutesInfo = (props) => {
                     <Button
                         className="btn-round pull-right"
                         color="danger"
-                        onClick={() => { setShowDeleteModalFailed(false);}}
+                        onClick={() => { setShowDeleteModalFailed(false); }}
                     >
                         Ok
                     </Button>
