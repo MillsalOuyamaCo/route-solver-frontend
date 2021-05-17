@@ -443,27 +443,7 @@ const VisitPointModalNew = (props) => {
                                             })}
                                         </Table>
 
-                                        {isLoading === true ?
-                                            <Button
-                                                color="info"
-                                                className="btn-round pull-right"
-                                            >
-                                                <Spinner
-                                                    size="sm"
-                                                    color="light"
-                                                    className="pull-right"
-                                                />Salvando...
-                                            </Button>
-                                            :
-                                            <Button
-                                                type="button"
-                                                color="info"
-                                                className="btn-round pull-right"
-                                                onClick={() => registerNewVisitPointsAsync()}
-                                            >
-                                                Salvar
-                                            </Button>
-                                        }
+
                                     </>
                                 }
 
@@ -650,6 +630,32 @@ const VisitPointModalNew = (props) => {
                             </Form>
                         )}
                     </Formik>
+                    {
+                        addressesList.length > 0 &&
+                        <>
+                            {isLoading === true ?
+                                <Button
+                                    color="info"
+                                    className="btn-round pull-right"
+                                >
+                                    <Spinner
+                                        size="sm"
+                                        color="light"
+                                        className="pull-right"
+                                    />Salvando...
+                                            </Button>
+                                :
+                                <Button
+                                    type="button"
+                                    color="info"
+                                    className="btn-round pull-right"
+                                    onClick={() => registerNewVisitPointsAsync()}
+                                >
+                                    Salvar
+                            </Button>
+                            }
+                        </>
+                    }
                 </ModalBody>
             </Modal>
 
