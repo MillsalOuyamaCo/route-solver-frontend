@@ -61,6 +61,57 @@ const VisitPointInfo = (props) => {
             });
     }
 
+    const RenderCardHearder = (props) => {
+        if (props.visitPoint.addresses_custom_properties !== null) {
+            if (typeof (props.visitPoint.addresses_custom_properties.address_nickname) !== undefined &&
+                props.visitPoint.addresses_custom_properties.address_nickname !== null) {
+                return (
+                    <>
+                        <CardTitle tag="h4">{props.visitPoint.addresses_custom_properties.address_nickname}</CardTitle>
+                        <CardSubtitle tag="h5" className="text-info">{props.visitPoint.address_line}, {props.visitPoint.address_number}</CardSubtitle>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        <CardTitle tag="h4">{props.visitPoint.address_line}</CardTitle>
+                        <CardSubtitle tag="h5" className="text-info">{props.visitPoint.address_number}</CardSubtitle>
+                    </>
+                );
+            }
+        } else {
+            return (
+                <>
+                    <CardTitle tag="h4">{props.visitPoint.address_line}</CardTitle>
+                    <CardSubtitle tag="h5" className="text-info">{props.visitPoint.address_number}</CardSubtitle>
+                </>
+            );
+        }
+    }
+
+    const RenderPhoneNumber = (props) => {
+        if (props.visitPoint.addresses_custom_properties !== null) {
+            if (typeof (props.visitPoint.addresses_custom_properties.address_phone_number) !== undefined &&
+                props.visitPoint.addresses_custom_properties.address_phone_number !== null) {
+                return (
+                    <CardText><strong className="font-weight-bold">Telefone: </strong> {props.visitPoint.addresses_custom_properties.address_phone_number}</CardText>
+                );
+            }
+            else {
+                return (
+                    <>
+                    </>
+                );
+            }
+        }
+        else {
+            return (
+                <>
+                </>
+            );
+        }
+    }
+
     return (
         <>
             { props.visitPointsArrays.map((visitPoints, key) => {
@@ -71,8 +122,9 @@ const VisitPointInfo = (props) => {
                                 <Col key={visitPoint._id} md={4}>
                                     <Card>
                                         <CardHeader id={`point${visitPoint._id}`}>
-                                            <CardTitle tag="h4">{visitPoint.address_line}</CardTitle>
-                                            <CardSubtitle tag="h5" className="text-info">{visitPoint.address_number}</CardSubtitle>
+                                            <RenderCardHearder
+                                                visitPoint={visitPoint}
+                                            />
                                         </CardHeader>
                                         <UncontrolledCollapse toggler={`#point${visitPoint._id}`}>
                                             <CardBody>
@@ -84,6 +136,9 @@ const VisitPointInfo = (props) => {
                                                 <CardText><strong className="font-weight-bold">Cidade: </strong> {visitPoint.locality}</CardText>
                                                 <CardText><strong className="font-weight-bold">CEP: </strong> {visitPoint.postal_code}</CardText>
                                                 <CardText><strong className="font-weight-bold">Bairro: </strong> {visitPoint.neighborhood}</CardText>
+                                                <RenderPhoneNumber
+                                                    visitPoint={visitPoint}
+                                                />
                                                 <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latitude}</CardText>
                                                 <CardText><strong className="font-weight-bold">Longitude: </strong> {visitPoint.lat_lon_info.longitude}</CardText>
                                                 <hr />
