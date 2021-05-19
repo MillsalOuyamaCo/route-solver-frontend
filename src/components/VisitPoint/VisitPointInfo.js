@@ -113,62 +113,56 @@ const VisitPointInfo = (props) => {
     }
 
     return (
-        <>
-            { props.visitPointsArrays.map((visitPoints, key) => {
+        <Row>
+            { props.visitPoints.map((visitPoint, key) => {
                 return (
-                    <Row key={key}>
-                        { visitPoints.map((visitPoint) => {
-                            return (
-                                <Col key={visitPoint._id} md={4}>
-                                    <Card>
-                                        <CardHeader id={`point${visitPoint._id}`}>
-                                            <RenderCardHearder
-                                                visitPoint={visitPoint}
-                                            />
-                                        </CardHeader>
-                                        <UncontrolledCollapse toggler={`#point${visitPoint._id}`}>
-                                            <CardBody>
-                                                <hr />
-                                                <CardText>
-                                                    <strong className="font-weight-bold">País: </strong> {visitPoint.country_region}
-                                                </CardText>
-                                                <CardText><strong className="font-weight-bold">Estado: </strong> {visitPoint.admin_district}</CardText>
-                                                <CardText><strong className="font-weight-bold">Cidade: </strong> {visitPoint.locality}</CardText>
-                                                <CardText><strong className="font-weight-bold">CEP: </strong> {visitPoint.postal_code}</CardText>
-                                                <CardText><strong className="font-weight-bold">Bairro: </strong> {visitPoint.neighborhood}</CardText>
-                                                <RenderPhoneNumber
-                                                    visitPoint={visitPoint}
-                                                />
-                                                <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latitude}</CardText>
-                                                <CardText><strong className="font-weight-bold">Longitude: </strong> {visitPoint.lat_lon_info.longitude}</CardText>
-                                                <hr />
-                                                <Button
-                                                    className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
-                                                    color="danger"
-                                                    id="tooltip923217206"
-                                                    type="button"
-                                                    onClick={() => {
-                                                        setVisitPointToDelete(visitPoint);
-                                                        setShowDeleteConfirmationModal(true);
-                                                    }}
-                                                >
-                                                    <i className="now-ui-icons ui-1_simple-remove" />
-                                                </Button>
-                                                <UncontrolledTooltip
-                                                    target="tooltip923217206"
-                                                >
-                                                    Excluir Ponto de Visita
+                    <Col key={visitPoint._id} md={4}>
+                        <Card>
+                            <CardHeader id={`point${visitPoint._id}`}>
+                                <RenderCardHearder
+                                    visitPoint={visitPoint}
+                                />
+                            </CardHeader>
+                            <UncontrolledCollapse toggler={`#point${visitPoint._id}`}>
+                                <CardBody>
+                                    <hr />
+                                    <CardText>
+                                        <strong className="font-weight-bold">País: </strong> {visitPoint.country_region}
+                                    </CardText>
+                                    <CardText><strong className="font-weight-bold">Estado: </strong> {visitPoint.admin_district}</CardText>
+                                    <CardText><strong className="font-weight-bold">Cidade: </strong> {visitPoint.locality}</CardText>
+                                    <CardText><strong className="font-weight-bold">CEP: </strong> {visitPoint.postal_code}</CardText>
+                                    <CardText><strong className="font-weight-bold">Bairro: </strong> {visitPoint.neighborhood}</CardText>
+                                    <RenderPhoneNumber
+                                        visitPoint={visitPoint}
+                                    />
+                                    <CardText><strong className="font-weight-bold">Latitude: </strong> {visitPoint.lat_lon_info.latitude}</CardText>
+                                    <CardText><strong className="font-weight-bold">Longitude: </strong> {visitPoint.lat_lon_info.longitude}</CardText>
+                                    <hr />
+                                    <Button
+                                        className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
+                                        color="danger"
+                                        id="tooltip923217206"
+                                        type="button"
+                                        onClick={() => {
+                                            setVisitPointToDelete(visitPoint);
+                                            setShowDeleteConfirmationModal(true);
+                                        }}
+                                    >
+                                        <i className="now-ui-icons ui-1_simple-remove" />
+                                    </Button>
+                                    <UncontrolledTooltip
+                                        target="tooltip923217206"
+                                    >
+                                        Excluir Ponto de Visita
                                                 </UncontrolledTooltip>
-                                            </CardBody>
-                                        </UncontrolledCollapse>
+                                </CardBody>
+                            </UncontrolledCollapse>
 
-                                        <CardFooter>
-                                        </CardFooter>
-                                    </Card>
-                                </Col>
-                            );
-                        })}
-                    </Row>
+                            <CardFooter>
+                            </CardFooter>
+                        </Card>
+                    </Col>
                 );
             })}
 
@@ -254,7 +248,7 @@ const VisitPointInfo = (props) => {
                     </Button>
                 </ModalFooter>
             </Modal>
-        </>
+        </Row>
     );
 }
 

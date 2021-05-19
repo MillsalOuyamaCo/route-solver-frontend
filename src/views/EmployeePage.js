@@ -192,7 +192,7 @@ function EmployeePage() {
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Input
-                                                    placeholder="Consulta por e-mail"
+                                                    placeholder="Buscar por E-mail do Funcionário"
                                                     type="email"
                                                     onBlur={(e) => { setEmployeeEmailToSearch(e.target.value) }}
                                                     onChange={(e) => { setEmployeeEmailToSearch(e.target.value) }}

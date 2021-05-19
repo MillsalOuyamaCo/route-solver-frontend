@@ -21,13 +21,11 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // reactstrap components
 import { Switch, Redirect, Route } from "react-router-dom";
-import { SecureRoute } from '@okta/okta-react';
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
