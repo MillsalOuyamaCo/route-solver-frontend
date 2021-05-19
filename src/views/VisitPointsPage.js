@@ -63,10 +63,9 @@ function VisitPointsPage() {
     const readPoints = async (customerId) => {
         setLoadingVisitPoints(true);
         const tempToken = await getToken();
-        routeSolverApis.get("lat-lon", {
+        routeSolverApis.get("lat-lon/byCustomer", {
             params: { 
-                customerId: customerId,
-                addressesPerLine: 3
+                customerId: customerId
             },
             headers: {
                 'Authorization': `bearer ${tempToken}`
@@ -98,13 +97,9 @@ function VisitPointsPage() {
         e.preventDefault();
         //setStringVisitPointToSearch(e.target.value);
 
-        let filteredPoint = visitPointsFound.map(visitPointsPerRow => {
-            let points = visitPointsPerRow.filter(point => {
+        let filteredPoint = visitPointsFound.filter(point => {
                 return point.address_line.toLowerCase().includes(e.target.value.toLowerCase())
             });
-
-            return points;
-        });
 
         setVisitPointFiltered(filteredPoint);
     }
@@ -164,7 +159,7 @@ function VisitPointsPage() {
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Input
-                                                    placeholder="Consulta por Nome do Ponto"
+                                                    placeholder="Buscar por Rua do Ponto de Visita"
                                                     type="text"
                                                     onChange={(e) => { setStringVisitPointToSearch(e.target.value); searchPoint(e) }}
                                                 />
@@ -180,7 +175,7 @@ function VisitPointsPage() {
                 {
                     visitPointsFound !== null && visitPointsFound.length > 0 &&
                     <VisitPointInfo
-                        visitPointsArrays={stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? visitPointsFound : visitPointFiltered}
+                        visitPoints={stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? visitPointsFound : visitPointFiltered}
                         handleVisitPointsChanged={handleVisitPointsChanged}
                     />
                 }

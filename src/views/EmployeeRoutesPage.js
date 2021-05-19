@@ -226,7 +226,7 @@ function EmployeeRoutesPage() {
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Input
-                                                    placeholder="Consulta por E-mail do Viajante"
+                                                    placeholder="Buscar por E-mail do Viajante"
                                                     type="email"
                                                     onChange={(e) => { setStringTravellerEmailToSearch(e.target.value); searchTraveller(e) }}
                                                 />

@@ -130,7 +130,7 @@ function OptimizedRoutesPage() {
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Input
-                                                    placeholder="Consulta por Nome do Ponto"
+                                                    placeholder="Buscar por E-mail Viajante"
                                                     type="text"
                                                     onChange={(e) => { setStringTravellerToSearch(e.target.value); searchTraveller(e) }}
                                                 />

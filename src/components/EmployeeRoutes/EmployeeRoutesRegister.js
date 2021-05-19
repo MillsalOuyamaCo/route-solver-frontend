@@ -202,6 +202,7 @@ const EmployeeRoutesRegister = (props) => {
             customer_id: travellerToSave.customer_id,
             first_name: travellerToSave.first_name,
             last_name: travellerToSave.last_name,
+            email: travellerToSave.email,
             registration_id: travellerToSave.registration_id,
             addresses: addressesToSave
         }, {
