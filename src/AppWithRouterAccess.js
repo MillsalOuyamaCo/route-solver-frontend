@@ -25,6 +25,7 @@ import "assets/demo/demo.css";
 import "assets/css/demo.css";
 // pages for dashboard
 import AdminLayout from "layouts/Admin.js";
+import TravellerAdmin from "layouts/TravellerAdmin.js";
 // pages for this kit
 import Index from "views/Index.js";
 import NucleoIcons from "views/NucleoIcons.js";
@@ -33,7 +34,7 @@ import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import RegistrationPage from "views/RegistrationPage.js";
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history.js';
-import ProtectedRoute from './auth/protected-route.js'; 
+import ProtectedRoute from './auth/protected-route.js';
 import Callback from './components/Callback/Callback.js';
 
 
@@ -52,8 +53,8 @@ const AppWithRouterAccess = () => {
                         }}
                     />
                     <Route
-                        path = "/callback"
-                        render={(props) => <Callback auth={props.auth}/>}
+                        path="/callback"
+                        render={(props) => <Callback {...props} />}
                     />
                     <Route
                         path="/index"
@@ -75,15 +76,25 @@ const AppWithRouterAccess = () => {
                         path="/registration"
                         render={(props) => <RegistrationPage {...props} />}
                     />
-                    <ProtectedRoute 
+                    <ProtectedRoute
                         path="/admin"
-                        component = {AdminLayout}
+                        component={AdminLayout}
                         render={(props) => <AdminLayout {...props} />}
                     />
-                    <ProtectedRoute 
+                    <ProtectedRoute
                         path="/admin/dashboard"
-                        component = {AdminLayout}
+                        component={AdminLayout}
                         render={(props) => <AdminLayout {...props} />}
+                    />
+                    <ProtectedRoute
+                        path="/traveller-admin"
+                        component={TravellerAdmin}
+                        render={(props) => <TravellerAdmin {...props} />}
+                    />
+                    <ProtectedRoute
+                        path="traveller-admin/traveller-dashboard"
+                        component={TravellerAdmin}
+                        render={(props) => <TravellerAdmin {...props} />}
                     />
                 </Switch>
             </Auth0ProviderWithHistory>

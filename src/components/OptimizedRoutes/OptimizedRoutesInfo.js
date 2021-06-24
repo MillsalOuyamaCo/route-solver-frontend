@@ -43,13 +43,13 @@ function OptimizedRoutesInfo(props) {
                 {console.log("optimized travellers found in info: " + JSON.stringify(props.optimizedTravellerArray))}
                 {props.optimizedTravellerArray.map((traveller, index) => {
                     return (
-                        <Col key={index} md={4}>
+                        <Col key={traveller.employee_id} md={4}>
                             <Card>
-                                <CardHeader id={`route${traveller.id}`}>
+                                <CardHeader id={`route${traveller.employee_id}`}>
                                     <CardTitle tag="h4">{traveller.first_name} {traveller.last_name}</CardTitle>
                                     <CardSubtitle tag="h5" className="text-info">{traveller.email}</CardSubtitle>
                                 </CardHeader>
-                                <UncontrolledCollapse toggler={`#route${traveller.id}`}>
+                                <UncontrolledCollapse toggler={`#route${traveller.employee_id}`}>
                                     <CardBody>
                                         <hr />
                                         <TravellerRouteContent

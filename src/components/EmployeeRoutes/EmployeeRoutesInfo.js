@@ -87,70 +87,65 @@ const EmployeeRoutesInfo = (props) => {
 
     return (
         <>
-            { props.travellersWithRoutes.map((travellers, key) => {
-                return (
-                    <Row key={key}>
-                        { travellers.map((traveller) => {
-                            return (
-                                <Col key={traveller.id} md={4}>
-                                    <Card>
-                                        <CardHeader id={`route${traveller.id}`}>
-                                            <CardTitle tag="h4">{traveller.first_name} {traveller.last_name}</CardTitle>
-                                            <CardSubtitle tag="h5" className="text-info">{traveller.email}</CardSubtitle>
-                                        </CardHeader>
-                                        <UncontrolledCollapse toggler={`#route${traveller.id}`}>
-                                            <CardBody>
-                                                <hr />
-                                                <TravellerRouteContent
-                                                    travellerId={traveller.id}
-                                                    travellersRoutes={traveller.addresses}
-                                                />
-                                                <hr />
-                                                <Button
-                                                    className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
-                                                    color="danger"
-                                                    id="tooltip923217206"
-                                                    type="button"
-                                                    onClick={() => {
-                                                        setTravellerToDelete(traveller);
-                                                        setShowDeleteConfirmationModal(true);
-                                                    }}
-                                                >
-                                                    <i className="now-ui-icons ui-1_simple-remove" />
-                                                </Button>
-                                                <UncontrolledTooltip
-                                                    target="tooltip923217206"
-                                                >
-                                                    Excluir Pontos de Visita de Viajante
+            <Row>
+                {props.travellersWithRoutes.map((traveller, key) => {
+                    return (
+                        <Col key={traveller.id} md={4}>
+                            <Card>
+                                <CardHeader id={`route${traveller.id}`}>
+                                    <CardTitle tag="h4">{traveller.first_name} {traveller.last_name}</CardTitle>
+                                    <CardSubtitle tag="h5" className="text-info">{traveller.email}</CardSubtitle>
+                                </CardHeader>
+                                <UncontrolledCollapse toggler={`#route${traveller.id}`}>
+                                    <CardBody>
+                                        <hr />
+                                        <TravellerRouteContent
+                                            travellerId={traveller.id}
+                                            travellersRoutes={traveller.addresses}
+                                        />
+                                        <hr />
+                                        <Button
+                                            className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
+                                            color="danger"
+                                            id="tooltip923217206"
+                                            type="button"
+                                            onClick={() => {
+                                                setTravellerToDelete(traveller);
+                                                setShowDeleteConfirmationModal(true);
+                                            }}
+                                        >
+                                            <i className="now-ui-icons ui-1_simple-remove" />
+                                        </Button>
+                                        <UncontrolledTooltip
+                                            target="tooltip923217206"
+                                        >
+                                            Excluir Pontos de Visita de Viajante
                                                 </UncontrolledTooltip>
-                                                <Button
-                                                    className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
-                                                    color="info"
-                                                    id="tooltip923217207"
-                                                    type="button"
-                                                    onClick={() => {
-                                                    }}
-                                                >
-                                                    <i className="now-ui-icons ui-2_settings-90" />
-                                                </Button>
-                                                <UncontrolledTooltip
-                                                    target="tooltip923217207"
-                                                >
-                                                    Em Breve
+                                        <Button
+                                            className="btn-round btn-icon btn-icon-mini btn-neutral pull-right"
+                                            color="info"
+                                            id="tooltip923217207"
+                                            type="button"
+                                            onClick={() => {
+                                            }}
+                                        >
+                                            <i className="now-ui-icons ui-2_settings-90" />
+                                        </Button>
+                                        <UncontrolledTooltip
+                                            target="tooltip923217207"
+                                        >
+                                            Em Breve
                                                     {/* Alterar Pontos de Visita para Viajante */}
-                                                </UncontrolledTooltip>
-                                            </CardBody>
-                                        </UncontrolledCollapse>
-                                        <CardFooter>
-                                        </CardFooter>
-                                    </Card>
-                                </Col>
-                            );
-                        })}
-                    </Row>
-                );
-            })
-            }
+                                        </UncontrolledTooltip>
+                                    </CardBody>
+                                </UncontrolledCollapse>
+                                <CardFooter>
+                                </CardFooter>
+                            </Card>
+                        </Col>
+                    );
+                })}
+            </Row>
 
             {
                 travellerToDelete != null &&

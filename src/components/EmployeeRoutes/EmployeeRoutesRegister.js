@@ -53,14 +53,12 @@ const EmployeeRoutesRegister = (props) => {
     const visitPointsToShow = stringVisitPointToSearch == null || stringVisitPointToSearch.trim() === "" ? copyOfRoutes : visitPointFiltered;
 
     const clearSelectedAddressArray = () => {
-        props.visitPoints.forEach((visitPointsRow) =>
-            visitPointsRow.forEach((point) => {
-                if (point.is_selected) {
-                    point.is_selected = false;
-                    point.isStartPoint = false;
-                }
-            })
-        );
+        props.visitPoints.forEach((point) => {
+            if (point.is_selected) {
+                point.is_selected = false;
+                point.isStartPoint = false;
+            }
+        });
         setAddressesToSave([]);
         setAddressesToSelectStartPoint([]);
         setSelectedStartPoint(null);
@@ -101,7 +99,7 @@ const EmployeeRoutesRegister = (props) => {
                 country_region: route.country_region,
                 admin_district: route.admin_district,
                 locality: route.locality,
-                postal_code: route.locality,
+                postal_code: route.postal_code,
                 neighborhood: route.neighborhood,
                 address_line: route.address_line,
                 address_number: route.address_number,
@@ -112,6 +110,7 @@ const EmployeeRoutesRegister = (props) => {
                 value: routeToSave,
                 label: routeToSave.address_line + " " + routeToSave.address_number + ", " + routeToSave.neighborhood
             }
+            
             addressesToSave.push(routeToSave);
             addressesToSelectStartPoint.push(routeToSelect);
             console.log("addressToSave added route = " + JSON.stringify(route));
@@ -325,20 +324,20 @@ const EmployeeRoutesRegister = (props) => {
                             </Card>
                         </Col>
                     </Row>
-                    {visitPointsToShow.map((pointsRow, key) => {
-                        return (
-                            <Row key={key}>
-                                { pointsRow.map((point) =>
-                                    <Col key={point._id} md="4">
-                                        <RoutesToSelect
-                                            route={point}
-                                            traveller={props.traveller}
-                                        />
-                                    </Col>
-                                )}
-                            </Row>
-                        );
-                    })}
+
+                    <Row>
+                        {visitPointsToShow.map((visitPoint, key) => {
+                            return (
+                                <Col key={visitPoint._id} md="4">
+                                    <RoutesToSelect
+                                        route={visitPoint}
+                                        traveller={props.traveller}
+                                    />
+                                </Col>
+                            );
+                        })}
+                    </Row>
+
                     <Button
                         color="info"
                         className="btn-round pull-right"

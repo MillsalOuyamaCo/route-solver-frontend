@@ -155,7 +155,7 @@ const VisitPointInfo = (props) => {
                                         target="tooltip923217206"
                                     >
                                         Excluir Ponto de Visita
-                                                </UncontrolledTooltip>
+                                    </UncontrolledTooltip>
                                 </CardBody>
                             </UncontrolledCollapse>
 
