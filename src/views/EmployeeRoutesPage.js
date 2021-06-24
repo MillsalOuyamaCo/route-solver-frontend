@@ -69,8 +69,7 @@ function EmployeeRoutesPage() {
         setLoadTravellerWithRoutes(true);
         const tempToken = await getToken();
         routeSolverApis.get(`customer/${customerId}/travellersWithFilters`, {
-            params:{
-                perRow: 3,
+            params: {
                 withRoutes: true
             },
             headers: {
@@ -98,7 +97,6 @@ function EmployeeRoutesPage() {
         const tempToken = await getToken();
         routeSolverApis.get(`customer/${customerId}/travellersWithFilters`, {
             params: {
-                perRow: 3,
                 withRoutes: false
             },
             headers: {
@@ -124,9 +122,9 @@ function EmployeeRoutesPage() {
     const readRoutes = async (customerId) => {
         setLoadVisitPoints(true);
         const tempToken = await getToken();
-        routeSolverApis.get("lat-lon", {
-            params: { customerId: customerId, 
-                addressesPerLine: 3
+        routeSolverApis.get("lat-lon/byCustomer", {
+            params: {
+                customerId: customerId,
             },
             headers: {
                 'Authorization': `bearer ${tempToken}`
@@ -249,7 +247,7 @@ function EmployeeRoutesPage() {
 
             <EmployeeRoutesModalNew
                 open={showEmployeeRoutesModalNew}
-                travellersWithoutRouteArrays={travellersWithoutRoutes}
+                travellersWithoutRoutes={travellersWithoutRoutes}
                 handleCloseModal={setShowEmployeeRoutesModalNew}
                 visitPoints={visitPoints}
                 handleChangedRoutes={handleChangedRoutes}

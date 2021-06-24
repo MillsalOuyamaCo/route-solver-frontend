@@ -16,11 +16,11 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
-import Icons from "views/Icons.js";
-import Typography from "views/Typography.js";
-import Maps from "views/Maps.js";
-import UserPage from "views/UserPage.js";
+// import Notifications from "views/Notifications.js";
+// import Icons from "views/Icons.js";
+// import Typography from "views/Typography.js";
+// import Maps from "views/Maps.js";
+// import UserPage from "views/UserPage.js";
 import EmployeePage from "views/EmployeePage.js";
 import EmployeeRoutes from "views/EmployeeRoutesPage.js";
 import VisitPoints from "views/VisitPointsPage.js";

@@ -59,28 +59,24 @@ const EmployeeRoutesModalNew = (props) => {
                     Selecione um Viajante
                 </ModalHeader>
                 <ModalBody>
-                    {props.travellersWithoutRouteArrays.map((travellers, key) => {
-                        return (
-                            <Row key={key}>
-                                { travellers.map((traveller) => {
-                                    return (
-                                        <Col key={traveller.id} md={4}>
-                                            <Card onClick={() => registerVisitPoint(traveller)}>
-                                                <CardHeader>
-                                                    <CardTitle tag="h4">{traveller.first_name} {traveller.last_name}</CardTitle>
-                                                    <CardSubtitle tag="h5" className="text-info">{traveller.registration_id}</CardSubtitle>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <CardText>{traveller.email}</CardText>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    );
-                                })}
-                            </Row>
-                        );
-                    })
-                    }
+                    <Row>
+                        {props.travellersWithoutRoutes.map((traveller, key) => {
+                            return (
+                                <Col key={traveller.id} md={4}>
+                                    <Card onClick={() => registerVisitPoint(traveller)}>
+                                        <CardHeader>
+                                            <CardTitle tag="h4">{traveller.first_name} {traveller.last_name}</CardTitle>
+                                            <CardSubtitle tag="h5" className="text-info">{traveller.registration_id}</CardSubtitle>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <CardText>{traveller.email}</CardText>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            );
+                        })
+                        }
+                    </Row>
                 </ModalBody>
             </Modal>
 
